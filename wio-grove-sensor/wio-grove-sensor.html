@@ -1,0 +1,176 @@
+<script type="text/javascript">
+	RED.nodes.registerType('wio-grove-sensor', {
+		paletteLabel: 'sensor',
+		category: 'wio',
+		color: '#C0EDC0',
+		defaults: {
+			name: { value: '' },
+			server: { value: 'iot.seeed.cc' },
+			token: { value: '' },
+			node: { value: '' },
+			port: { value: '' },
+			module: { value: '' },
+			method: { value: '' },
+			output: { value: 'value' }
+		},
+		inputs: 1,
+		outputs: 1,
+		icon: 'file.png',
+		label: function () {
+			return this.name || 'sensor';
+		},
+		oneditprepare: function () {
+			var config = this;
+			var server = $('#node-input-server');
+			var token = $('#node-input-token');
+			var nodes = $('#node-input-node');
+			var ports = $('#node-input-port');
+			var modules = $('#node-input-module');
+			var methods = $('#node-input-method');
+
+			showModuleMethods();
+
+			token.on('change', function () {
+				reloadNodeSelect();
+			});
+
+			nodes.on('change', function () {
+				reloadPortSelect();
+			});
+
+			ports.on('change', function () {
+				selectModuleBySku(ports.find('option:selected').attr('data-sku'));
+			});
+
+			modules.on('change', function () {
+				showModuleMethods(modules.val());
+			})
+
+			function reloadNodeSelect() {
+				$.ajax({
+					url: 'https://' + config.server + '/v1/nodes/list?access_token=' + token.val(),
+					method: 'GET',
+					success: function (res) {
+						nodes.html('');
+						res.nodes.sort(function (a, b) {
+							return ((a.online) ? -1 : 1);
+						});
+						for (var i = 0; i < res.nodes.length; i++) {
+							nodes.append($('<option></option>')
+								.attr('value', res.nodes[i].node_key)
+								.text(res.nodes[i].name + ' (' + ((res.nodes[i].online) ? 'up' : 'down') + ')'));
+						}
+						if ((config.node) && (nodes.find('option[value="' + config.node + '"]').length))
+							nodes.val(config.node);
+						nodes.trigger('change');
+					}
+				});
+			}
+
+			function reloadPortSelect() {
+				if (nodes.val()) {
+					$.ajax({
+						url: 'https://' + config.server + '/v1/node/config?access_token=' + nodes.val(),
+						method: 'GET',
+						success: function (res) {
+							ports.html('');
+							for (var i = 0; i < res.config.connections.length; i++) {
+								ports.append($('<option></option>')
+									.attr('value', res.config.connections[i].port)
+									.attr('data-sku', res.config.connections[i].sku)
+									.text(res.config.connections[i].port));
+							}
+							if ((config.port) && (ports.find('option[value="' + config.port + '"]').length))
+								ports.val(config.port);
+							ports.trigger('change');
+						}
+					});
+				}
+			}
+
+			function selectModuleBySku(sku) {
+				if (sku)
+					modules.val(modules.find('option[data-sku-for="' + sku + '"]').attr('value')).trigger('change');
+			}
+
+			function showModuleMethods(module) {
+				methods.val('').find('option').hide();
+				if (module) {
+					methods.val(methods.find('option[data-option-for="' + module + '"]').show().first().attr('value'));
+				}
+			}
+		}
+	});
+</script>
+
+<script type="text/x-red" data-template-name="wio-grove-sensor">
+	<div class="form-row">
+		<label for="node-input-name"><i class="icon-tag"></i> Name</label>
+		<input type="text" id="node-input-name" placeholder="Name">
+	</div>
+	<div class="form-row">
+		<label for="node-input-server"><i class="icon-tag"></i> Server</label>
+		<input type="text" id="node-input-server" placeholder="Server">
+	</div>
+	<div class="form-row">
+		<label for="node-input-token"><i class="icon-tag"></i> Token</label>
+		<input type="text" id="node-input-token" placeholder="Token">
+	</div>
+	<div class="form-row">
+		<label for="node-input-node"><i class="icon-tag"></i> Node</label>
+		<select type="text" id="node-input-node"></select>
+	</div>
+	<div class="form-row">
+		<label for="node-input-port"><i class="icon-tag"></i> Port</label>
+		<select type="text" id="node-input-port"></select>
+	</div>
+	<div class="form-row">
+		<label for="node-input-module"><i class="icon-tag"></i> Module</label>
+		<select type="text" id="node-input-module">
+			<option data-sku-for="101020015" value="GroveTemp">Grove Temperature</option>
+			<option data-sku-for="101020019-ffff" value="GroveTempHum">Grove Temperature & Humidity</option>
+			<option data-sku-for="101020010" value="GroveUltraRanger">Grove Ultrasonic Ranger</option>
+			<option data-sku-for="101020020" value="GrovePIRMotion">Grove PIR Motion</option>
+			<option data-sku-for="101020078" value="GroveAirquality">Grove Air Quality</option>
+			<option data-sku-for="101020192" value="GroveBaroBMP280">Grove Barometer BMP280</option>
+			<option data-sku-for="101020030" value="GroveDigitalLight">Grove Digital Light</option>
+			<option data-sku-for="101020008" value="GroveMoisture">Grove Moisture</option>
+			<option data-sku-for="101020083" value="GroveGesture">Grove Gesture</option>
+			<option data-sku-for="101020016" value="GroveIRRecv">Grove Infrared Receiver</option>
+			<option data-sku-for="101020038" value="GroveMagneticSwitch">Grove Magnetic Switch</option>
+		</select>
+	</div>
+	<div class="form-row">
+		<label for="node-input-method"><i class="icon-tag"></i> Method</label>
+		<select type="text" id="node-input-method">
+			<option data-option-for="GroveTemp" value="temp">Celsius Temperature</option>
+			<option data-option-for="GroveTempHum" value="temperature">Celsius Temperature</option>
+			<option data-option-for="GroveTempHum" value="temperature_f">Fahrenheit Temperature</option>
+			<option data-option-for="GroveTempHum" value="humidity">Humidity</option>
+			<option data-option-for="GroveUltraRanger" value="range_in_inch">Inches Range</option>
+			<option data-option-for="GroveUltraRanger" value="range_in_cm">Centimeters Range</option>
+			<option data-option-for="GrovePIRMotion" value="approach">Approach</option>
+			<option data-option-for="GroveAirquality" value="quality">Quality</option>
+			<option data-option-for="GroveBaroBMP280" value="temperature">Celsius Temperature</option>
+			<option data-option-for="GroveBaroBMP280" value="altitude">Altitude</option>
+			<option data-option-for="GroveBaroBMP280" value="pressure">Pressure</option>
+			<option data-option-for="GroveDigitalLight" value="lux">Lux</option>
+			<option data-option-for="GroveMoisture" value="moisture">Moisture</option>
+			<option data-option-for="GroveGesture" value="motion">Motion</option>
+			<option data-option-for="GroveIRRecv" value="protocol_parameters">Protocol Parameters</option>
+			<option data-option-for="GroveIRRecv" value="last_data_recved">Received Data</option>
+			<option data-option-for="GroveMagneticSwitch" value="approach">Approach</option>
+		</select>
+	</div>
+	<div class="form-row">
+		<label for="node-input-output"><i class="icon-tag"></i> Output</label>
+		<select type="text" id="node-input-output">
+			<option value="value">Parsed Value</option>
+			<option value="object">Raw Object</option>
+		</select>
+	</div>
+</script>
+
+<script type="text/x-red" data-help-name="wio-grove-sensor">
+	<p>Wio Grove Sensor</p>
+</script>

@@ -1,0 +1,140 @@
+<!--<script type="text/javascript" src="test.js"></script>-->
+
+<script type="text/javascript">
+
+
+	RED.nodes.registerType('wio-grove-ws2812', {
+		paletteLabel: 'ws2812',
+		category: 'wio',
+		color: '#C0EDC0',
+		defaults: {
+			name: { value: '' },
+			server: { value: 'iot.seeed.cc' },
+			token: { value: '' },
+			node: { value: '' },
+			port: { value: '' },
+			mode: { value: 'auto' },
+			pos: { value: 0 },
+			count: { value: 30 },
+			colors: {
+				value: 'FF0000,EE1100,DD2200,CC3300,BB4400,AA5500,996600,887700,778800,669900,55AA00,44BB00,32CC00,21DD00,10EE00'
+					+ ',00FF00,00EC12,00DA24,00C836,00B648,00A35B,00916D,007F7F,006D91,005BA3,0048B6,0036C8,0024DA,0012EC,0000FF'
+			}
+		},
+		inputs: 1,
+		outputs: 1,
+		icon: 'file.png',
+		label: function () {
+			return this.name || 'ws2812';
+		},
+		oneditprepare: function () {
+			var config = this;
+			var server = $('#node-input-server');
+			var token = $('#node-input-token');
+			var nodes = $('#node-input-node');
+			var ports = $('#node-input-port');
+
+			server.on('change', function () {
+				reloadNodeSelect();
+			});
+
+			token.on('change', function () {
+				reloadNodeSelect();
+			});
+
+			nodes.on('change', function () {
+				reloadPortSelect();
+			});
+
+			function reloadNodeSelect() {
+				if ((server.val()) && (token.val())) {
+					$.ajax({
+						url: 'https://' + server.val() + '/v1/nodes/list?access_token=' + token.val(),
+						method: 'GET',
+						success: function (res) {
+							nodes.html('');
+							res.nodes.sort(function (a, b) {
+								return ((a.online) ? -1 : 1);
+							});
+							for (var i = 0; i < res.nodes.length; i++) {
+								nodes.append($('<option></option>')
+									.attr('value', res.nodes[i].node_key)
+									.text(res.nodes[i].name + ' (' + ((res.nodes[i].online) ? 'up' : 'down') + ')'));
+							}
+							if ((config.node) && (nodes.find('option[value="' + config.node + '"]').length))
+								nodes.val(config.node);
+							nodes.trigger('change');
+						}
+					});
+				}
+			}
+
+			function reloadPortSelect() {
+				if (nodes.val()) {
+					$.ajax({
+						url: 'https://' + server.val() + '/v1/node/config?access_token=' + nodes.val(),
+						method: 'GET',
+						success: function (res) {
+							ports.html('');
+							for (var i = 0; i < res.config.connections.length; i++) {
+								ports.append($('<option></option>')
+									.attr('value', res.config.connections[i].port)
+									.attr('data-sku', res.config.connections[i].sku)
+									.text(res.config.connections[i].port));
+							}
+							if ((config.port) && (ports.find('option[value="' + config.port + '"]').length))
+								ports.val(config.port);
+							ports.trigger('change');
+						}
+					});
+				}
+			}
+		}
+	});
+</script>
+
+<script type="text/x-red" data-template-name="wio-grove-ws2812">
+	<div class="form-row">
+		<label for="node-input-name"><i class="icon-tag"></i> Name</label>
+		<input type="text" id="node-input-name" placeholder="Name">
+	</div>
+	<div class="form-row">
+		<label for="node-input-server"><i class="icon-tag"></i> Server</label>
+		<input type="text" id="node-input-server" placeholder="Server">
+	</div>
+	<div class="form-row">
+		<label for="node-input-token"><i class="icon-tag"></i> Token</label>
+		<input type="text" id="node-input-token" placeholder="Token">
+	</div>
+	<div class="form-row">
+		<label for="node-input-node"><i class="icon-tag"></i> Node</label>
+		<select type="text" id="node-input-node"></select>
+	</div>
+	<div class="form-row">
+		<label for="node-input-port"><i class="icon-tag"></i> Port</label>
+		<select type="text" id="node-input-port"></select>
+	</div>
+	<div class="form-row">
+		<label for="node-input-mode"><i class="icon-tag"></i> Mode</label>
+		<select type="text" id="node-input-mode">
+			<option value="auto">Auto</option>
+			<option value="manual">Manual</option>
+		</select>
+	</div>
+	<div class="form-row">
+		<label for="node-input-pos"><i class="icon-tag"></i> Pos</label>
+		<input type="text" id="node-input-pos" placeholder="Pos">
+	</div>
+	<div class="form-row">
+		<label for="node-input-count"><i class="icon-tag"></i> Count</label>
+		<input type="text" id="node-input-count" placeholder="Count">
+	</div>
+	<div class="form-row">
+		<label for="node-input-colors"><i class="icon-tag"></i> Colors</label>
+		<input type="text" id="node-input-colors" placeholder="Colors">
+	</div>
+</script>
+
+<script type="text/x-red" data-help-name="wio-grove-ws2812">
+	<p>Wio Grove WS2812</p>
+</script>

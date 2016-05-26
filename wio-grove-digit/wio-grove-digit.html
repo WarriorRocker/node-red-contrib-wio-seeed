@@ -1,0 +1,138 @@
+<script type="text/javascript">
+	RED.nodes.registerType('wio-grove-digit', {
+		paletteLabel: 'digit',
+		category: 'wio',
+		color: '#C0EDC0',
+		defaults: {
+			name: { value: '' },
+			server: { value: 'iot.seeed.cc' },
+			token: { value: '' },
+			node: { value: '' },
+			port: { value: '' },
+			display: { value: 'chars' },
+			pos: { value: 0 },
+			count: { value: 4 }
+		},
+		inputs: 1,
+		outputs: 1,
+		icon: 'file.png',
+		label: function () {
+			return this.name || 'digit';
+		},
+		oneditprepare: function () {
+			var config = this;
+			var server = $('#node-input-server');
+			var token = $('#node-input-token');
+			var nodes = $('#node-input-node');
+			var ports = $('#node-input-port');
+
+			server.on('change', function () {
+				reloadNodeSelect();
+			});
+
+			token.on('change', function () {
+				reloadNodeSelect();
+			});
+
+			nodes.on('change', function () {
+				reloadPortSelect();
+			});
+
+			function reloadNodeSelect() {
+				if ((server.val()) && (token.val())) {
+					$.ajax({
+						url: 'https://' + server.val() + '/v1/nodes/list?access_token=' + token.val(),
+						method: 'GET',
+						success: function (res) {
+							nodes.html('');
+							res.nodes.sort(function (a, b) {
+								return ((a.online) ? -1 : 1);
+							});
+							for (var i = 0; i < res.nodes.length; i++) {
+								nodes.append($('<option></option>')
+									.attr('value', res.nodes[i].node_key)
+									.text(res.nodes[i].name + ' (' + ((res.nodes[i].online) ? 'up' : 'down') + ')'));
+							}
+							if ((config.node) && (nodes.find('option[value="' + config.node + '"]').length))
+								nodes.val(config.node);
+							nodes.trigger('change');
+						}
+					});
+				}
+			}
+
+			function reloadPortSelect() {
+				if (nodes.val()) {
+					$.ajax({
+						url: 'https://' + server.val() + '/v1/node/config?access_token=' + nodes.val(),
+						method: 'GET',
+						success: function (res) {
+							ports.html('');
+							for (var i = 0; i < res.config.connections.length; i++) {
+								ports.append($('<option></option>')
+									.attr('value', res.config.connections[i].port)
+									.attr('data-sku', res.config.connections[i].sku)
+									.text(res.config.connections[i].port));
+							}
+							if ((config.port) && (ports.find('option[value="' + config.port + '"]').length))
+								ports.val(config.port);
+							ports.trigger('change');
+						}
+					});
+				}
+			}
+		}
+	});
+</script>
+
+<script type="text/x-red" data-template-name="wio-grove-digit">
+	<div class="form-row">
+		<label for="node-input-name"><i class="icon-tag"></i> Name</label>
+		<input type="text" id="node-input-name" placeholder="Name">
+	</div>
+	<div class="form-row">
+		<label for="node-input-server"><i class="icon-tag"></i> Server</label>
+		<input type="text" id="node-input-server" placeholder="Server">
+	</div>
+	<div class="form-row">
+		<label for="node-input-token"><i class="icon-tag"></i> Token</label>
+		<input type="text" id="node-input-token" placeholder="Token">
+	</div>
+	<div class="form-row">
+		<label for="node-input-node"><i class="icon-tag"></i> Node</label>
+		<select type="text" id="node-input-node"></select>
+	</div>
+	<div class="form-row">
+		<label for="node-input-port"><i class="icon-tag"></i> Port</label>
+		<select type="text" id="node-input-port"></select>
+	</div>
+	<div class="form-row">
+		<label for="node-input-display"><i class="icon-tag"></i> Display</label>
+		<select type="text" id="node-input-display">
+			<option value="chars">Multiple Characters</option>
+			<option value="chr">Single Character</option>
+		</select>
+	</div>
+	<div class="form-row">
+		<label for="node-input-pos"><i class="icon-tag"></i> Pos</label>
+		<select type="text" id="node-input-pos">
+			<option value="0">0</option>
+			<option value="1">1</option>
+			<option value="2">2</option>
+			<option value="3">3</option>
+		</select>
+	</div>
+	<div class="form-row">
+		<label for="node-input-count"><i class="icon-tag"></i> Count</label>
+		<select type="text" id="node-input-count">
+			<option value="1">1</option>
+			<option value="2">2</option>
+			<option value="3">3</option>
+			<option value="4">4</option>
+		</select>
+	</div>
+</script>
+
+<script type="text/x-red" data-help-name="wio-grove-digit">
+	<p>Wio Grove digit</p>
+</script>
