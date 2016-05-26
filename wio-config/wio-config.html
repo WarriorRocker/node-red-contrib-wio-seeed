@@ -1,0 +1,21 @@
+﻿<script type="text/javascript">
+	RED.nodes.registerType('wio-config', {
+		category: 'config',
+		defaults: {
+			server: { value: 'iot.seeed.cc', required: true },
+			token: { value: '', required: true },
+		},
+		label: 'wio config'
+	});
+</script>
+
+<script type="text/x-red" data-template-name="wio-config">
+	<div class="form-row">
+		<label for="node-config-input-server"><i class="icon-tag"></i> Server</label>
+		<input type="text" id="node-config-input-server" placeholder="Server">
+	</div>
+	<div class="form-row">
+		<label for="node-config-input-token"><i class="icon-tag"></i> Token</label>
+		<input type="text" id="node-config-input-token" placeholder="Token">
+	</div>
+</script>

@@ -5,8 +5,7 @@
 		color: '#C0EDC0',
 		defaults: {
 			name: { value: '' },
-			server: { value: 'iot.seeed.cc' },
-			token: { value: '' },
+			connection: { value: '', type: 'wio-config' },
 			node: { value: '' },
 			port: { value: '' },
 			display: { value: 'chars' },
@@ -21,27 +20,31 @@
 		},
 		oneditprepare: function () {
 			var config = this;
-			var server = $('#node-input-server');
-			var token = $('#node-input-token');
+			config.connection = null;
+
+			var connection = $('#node-input-connection');
 			var nodes = $('#node-input-node');
 			var ports = $('#node-input-port');
 
-			server.on('change', function () {
-				reloadNodeSelect();
-			});
-
-			token.on('change', function () {
-				reloadNodeSelect();
+			connection.on('change', function () {
+				getConnection();
 			});
 
 			nodes.on('change', function () {
 				reloadPortSelect();
 			});
 
+			function getConnection() {
+				$.getJSON('wio-config/config-node?id=' + connection.val()).done(function (res) {
+					config.connection = res;
+					reloadNodeSelect();
+				});
+			}
+
 			function reloadNodeSelect() {
-				if ((server.val()) && (token.val())) {
+				if ((config.connection) && (config.connection.server) && (config.connection.token)) {
 					$.ajax({
-						url: 'https://' + server.val() + '/v1/nodes/list?access_token=' + token.val(),
+						url: 'https://' + config.connection.server + '/v1/nodes/list?access_token=' + config.connection.token,
 						method: 'GET',
 						success: function (res) {
 							nodes.html('');
@@ -64,7 +67,7 @@
 			function reloadPortSelect() {
 				if (nodes.val()) {
 					$.ajax({
-						url: 'https://' + server.val() + '/v1/node/config?access_token=' + nodes.val(),
+						url: 'https://' + config.connection.server + '/v1/node/config?access_token=' + nodes.val(),
 						method: 'GET',
 						success: function (res) {
 							ports.html('');
@@ -91,12 +94,8 @@
 		<input type="text" id="node-input-name" placeholder="Name">
 	</div>
 	<div class="form-row">
-		<label for="node-input-server"><i class="icon-tag"></i> Server</label>
-		<input type="text" id="node-input-server" placeholder="Server">
-	</div>
-	<div class="form-row">
-		<label for="node-input-token"><i class="icon-tag"></i> Token</label>
-		<input type="text" id="node-input-token" placeholder="Token">
+		<label for="node-input-connection"><i class="icon-tag"></i> Connection</label>
+		<select type="text" id="node-input-connection"></select>
 	</div>
 	<div class="form-row">
 		<label for="node-input-node"><i class="icon-tag"></i> Node</label>

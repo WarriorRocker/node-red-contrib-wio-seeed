@@ -15,7 +15,8 @@
 		"grove"
 	],
 	"dependencies": {
-		"https": "*"
+		"https": "*",
+		"url": "*"
 	},
 	"repository": {
 		"type": "git",

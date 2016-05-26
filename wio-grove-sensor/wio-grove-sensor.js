@@ -4,37 +4,43 @@ module.exports = function (RED) {
 	function WioGroveSensor(config) {
 		RED.nodes.createNode(this, config);
 		var node = this;
-		this.on('input', function (msg) {
-			node.status({ fill: 'blue', shape: 'dot', text: 'requesting' });
-			var req = https.request({
-				hostname: config.server,
-				port: 443,
-				path: '/v1/node/' + config.module + config.port + '/' + config.method + '?access_token=' + config.node,
-				method: 'GET'
-			}, function (res) {
-				res.on('data', function (chunk) {
-					var json = JSON.parse(chunk);
-					var payload = ((config.output == 'object') ? json : wioGetParsedValue(json));
-					if (payload != undefined) {
-						msg.payload = payload;
-						node.status({});
-					} else {
-						msg.payload = '';
-						node.status({ fill: 'red', shape: 'ring', text: 'undefined' });
-					}
-					node.send(msg);
+		node.connection = RED.nodes.getNode(config.connection)
+
+		if (node.connection) {
+			this.on('input', function (msg) {
+				node.status({ fill: 'blue', shape: 'dot', text: 'requesting' });
+				var req = https.request({
+					hostname: node.connection.server,
+					port: 443,
+					path: '/v1/node/' + config.module + config.port + '/' + config.method + '?access_token=' + config.node,
+					method: 'GET'
+				}, function (res) {
+					res.on('data', function (chunk) {
+						var json = JSON.parse(chunk);
+						var payload = ((config.output == 'object') ? json : wioGetParsedValue(json));
+						if (payload != undefined) {
+							msg.payload = payload;
+							node.status({});
+						} else {
+							msg.payload = '';
+							node.status({ fill: 'red', shape: 'ring', text: 'undefined' });
+						}
+						node.send(msg);
+					});
 				});
+
+				req.on('error', function (err) {
+					msg.payload = err.toString();
+					msg.statusCode = err.code;
+					node.send(msg);
+					node.status({ fill: 'red', shape: 'ring', text: err.code });
+				});
+
+				req.end();
 			});
-			
-			req.on('error', function (err) {
-				msg.payload = err.toString();
-				msg.statusCode = err.code;
-				node.send(msg);
-				node.status({ fill: 'red', shape: 'ring', text: err.code });
-			});
-			
-			req.end();
-		});
+		} else {
+			node.status({ fill: 'red', shape: 'ring', text: 'missing connection' });
+		}
 
 		function wioGetParsedValue(json) {
 			switch (config.module) {
