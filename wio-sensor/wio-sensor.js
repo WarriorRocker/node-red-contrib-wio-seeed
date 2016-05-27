@@ -105,6 +105,15 @@ module.exports = function (RED) {
 
 				case 'GroveMagneticSwitch':
 					return json.mag_approach;
+
+				case 'GroveCompass':
+					return json.heading_deg;
+
+				case 'GroveAccMMA7660':
+					switch (config.method) {
+						case 'shaked':
+							return json.shaked;
+					}
 			}
 
 			return json;

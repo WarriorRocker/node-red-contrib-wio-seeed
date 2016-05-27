@@ -30,7 +30,9 @@
 				'101020008': { module: 'GroveMoisture', name: 'Grove Moisture' },
 				'101020083': { module: 'GroveGesture', name: 'Grove Gesture' },
 				'101020016': { module: 'GroveIRRecv', name: 'Grove Infrared Receiver' },
-				'101020038': { module: 'GroveMagneticSwitch', name: 'Grove Magnetic Switch' }
+				'101020038': { module: 'GroveMagneticSwitch', name: 'Grove Magnetic Switch' },
+				'101020034': { module: 'GroveCompass', name: 'Grove 3-Axis Digital Compass' },
+				'101020039': { module: 'GroveAccMMA7660', name: 'Grove 3-Axis Digital Accelerometer' }
 			}
 			$.getScript('wio-common').done(function (res) {
 				WioCommon(config, skus);
@@ -93,6 +95,9 @@
 			<option data-option-for="GroveIRRecv" value="protocol_parameters">Protocol Parameters</option>
 			<option data-option-for="GroveIRRecv" value="last_data_recved">Received Data</option>
 			<option data-option-for="GroveMagneticSwitch" value="approach">Approach</option>
+			<option data-option-for="GroveCompass" value="compass_heading">Heading</option>
+			<option data-option-for="GroveAccMMA7660" value="acceleration">Acceleration</option>
+			<option data-option-for="GroveAccMMA7660" value="shaked">Shaked</option>
 		</select>
 	</div>
 	<div class="form-row">
