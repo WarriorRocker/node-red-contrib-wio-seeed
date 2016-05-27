@@ -17,7 +17,8 @@
 	"dependencies": {
 		"https": "*",
 		"url": "*",
-		"path": "*"
+		"path": "*",
+		"websocket": "*"
 	},
 	"repository": {
 		"type": "git",
