@@ -1,25 +1,29 @@
 module.exports = function (RED) {
 	const https = require('https');
 
-	function WioGroveDigit(config) {
+	function WioWs2812(config) {
 		RED.nodes.createNode(this, config);
 		var node = this;
-		node.connection = RED.nodes.getNode(config.connection);
+		node.connection = RED.nodes.getNode(config.connection)
 
 		if (node.connection) {
 			this.on('input', function (msg) {
-				config.count = parseInt(config.count);
-				var display = msg.payload;
-				for (var i = msg.payload.toString().length; i <= parseInt(config.count) ; i++)
-					display += '.';
+				var hexColors = [];
+				var count = Math.min(((config.mode == 'auto') ? msg.payload : config.count), config.count);
+				var colors = config.colors.split(',');
+
+				for (var i = 0; i < count; i++)
+					if (colors[i]) hexColors.push(colors[i]);
+
+				for (i = (hexColors.length - 1) ; i < config.count; i++)
+					hexColors.push('000000');
 
 				node.status({ fill: 'blue', shape: 'dot', text: 'requesting' });
 				var req = https.request({
 					hostname: node.connection.server,
 					port: 443,
-					path: '/v1/node/' + config.port.replace(/:/g, '') + '/'
-						+ ((config.display == 'chars') ? 'display_digits' : 'display_one_digit') + '/'
-						+ config.pos + '/' + display + '?access_token=' + config.node,
+					path: '/v1/node/' + config.port.replace(/:/g, '') + '/segment/'
+						+ config.pos + '/' + hexColors.join('') + '?access_token=' + config.node,
 					method: 'POST'
 				}, function (res) {
 					res.on('data', function (chunk) {
@@ -42,5 +46,5 @@ module.exports = function (RED) {
 			node.status({ fill: 'red', shape: 'ring', text: 'missing connection' });
 		}
 	}
-	RED.nodes.registerType('wio-grove-digit', WioGroveDigit);
+	RED.nodes.registerType('wio-ws2812', WioWs2812);
 }

@@ -1,7 +1,7 @@
 module.exports = function (RED) {
 	const https = require('https');
 
-	function WioGroveSensor(config) {
+	function WioSensor(config) {
 		RED.nodes.createNode(this, config);
 		var node = this;
 		node.connection = RED.nodes.getNode(config.connection);
@@ -110,5 +110,5 @@ module.exports = function (RED) {
 			return json;
 		}
 	}
-	RED.nodes.registerType('wio-grove-sensor', WioGroveSensor);
+	RED.nodes.registerType('wio-sensor', WioSensor);
 }
