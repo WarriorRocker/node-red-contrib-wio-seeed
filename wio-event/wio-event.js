@@ -22,15 +22,24 @@
 
 				connection.on('message', function (message) {
 					if ((message.type == 'utf8') && (message.utf8Data)) {
-						node.status({});
-						node.send({
-							payload: JSON.parse(message.utf8Data)
-						});
-					} else {
-						node.status({ fill: 'red', shape: 'ring', text: 'unknown' });
-						node.send({
-							payload: message
-						});
+						var json = JSON.parse(message.utf8Data);
+
+						if (config.output == 'value') {
+							var msgs = [];
+
+							for (var i = 0; i < config.events.length; i++)
+								msgs.push((((json.msg) && (json.msg[config.events[i]]))
+								? {
+									payload: json.msg[config.events[i]]
+								} : null));
+
+							if ((msgs.length > 1) || (msgs[0]))
+								node.send(msgs);
+						} else {
+							node.send({
+								payload: json
+							});
+						}
 					}
 				});
 			});

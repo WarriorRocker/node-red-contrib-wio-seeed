@@ -7,7 +7,9 @@
 			name: { value: '' },
 			connection: { value: '', type: 'wio-config' },
 			node: { value: '' },
-			events: { value: [] }
+			output: { value: 'value' },
+			events: { value: [] },
+			outputs: { value: 1 }
 		},
 		inputs: 0,
 		outputs: 1,
@@ -21,7 +23,20 @@
 				'101020020': {
 					name: 'Grove PIR Motion',
 					events: {
-						'ir_moved': 'PIR Moved'
+						'ir_moved': 'PIR Motion'
+					}
+				},
+				'101020003': {
+					name: 'Grove Button',
+					events: {
+						'button_pressed': 'Button Pressed'
+					}
+				},
+				'101020016': {
+					name: 'Grove Infrared Receiver',
+					events: {
+						'ir_recv_data_len': 'Data Length',
+						'ir_recv_data_hex': 'Data Hex'
 					}
 				}
 			};
@@ -29,10 +44,16 @@
 				WioCommon(config);
 
 				var addEvent = $('#node-input-add-event');
+				var output = $('#node-input-output');
+				var eventsRows = $('.node-input-event-row');
 				var eventsContainer = $('#node-input-event-container');
 
+				output.on('change', function () {
+					eventsRows.toggle((output.val() == 'value'));
+				}).trigger('change');
+
 				addEvent.on('click', function () {
-					generateEvent((eventsContainer.children().length + 1), {});
+					generateEvent((eventsContainer.children().length + 1));
 				});
 
 				for (var i = 0; i < config.events.length; i++)
@@ -45,7 +66,7 @@
 
 					var eventSelect = $('<select/>')
 						.attr('class', 'node-input-event-type')
-						.attr('style', 'width: 250px; margin-left: 5px;')
+						.attr('style', 'width: 320px; margin-left: 5px;')
 						.appendTo(row);
 					for (var key in events)
 						if (events.hasOwnProperty(key))
@@ -54,17 +75,8 @@
 									$('<option/>').attr('value', type)
 										.text(events[key].name + ' - ' + events[key].events[type])
 										.appendTo(eventSelect);
-					if (event.type)
-						eventSelect.val(event.type);
-
-					var outputSelect = $('<select/>')
-						.attr('class', 'node-input-event-output')
-						.attr('style', 'width: 80px; margin-left: 5px;')
-						.appendTo(row);
-					$('<option/>').attr('value', 'value').text('Value').appendTo(outputSelect);
-					$('<option/>').attr('value', 'object').text('Object').appendTo(outputSelect);
-					if (event.output)
-						outputSelect.val(event.output);
+					if (event)
+						eventSelect.val(event);
 
 					var finalSpan = $('<span/>')
 						.attr('style', 'float: right; margin-right: 10px;')
@@ -99,17 +111,14 @@
 		oneditsave: function () {
 			var config = this;
 			config.events = [];
+			var output = $('#node-input-output');
 			var eventsContainer = $('#node-input-event-container');
 
 			eventsContainer.children().each(function (index) {
-				var event = $(this);
-				config.events.push({
-					type: event.find('.node-input-event-type').val(),
-					output: event.find('.node-input-event-output').val()
-				});
+				config.events.push($(this).find('.node-input-event-type').val());
 			});
 
-			config.outputs = config.events.length;
+			config.outputs = ((output.val() == 'value') ? config.events.length : 1);
 		}
 	});
 </script>
@@ -127,12 +136,19 @@
 		<label for="node-input-node"><i class="icon-tag"></i> Node</label>
 		<select type="text" id="node-input-node"></select>
 	</div>
-	<div class="form-row node-input-event-container-row" style="margin-bottom: 0px;">
-		<div id="node-input-event-container-div" style="box-sizing: border-box; border-radius: 5px; height: 310px; padding: 5px; border: 1px solid #ccc; overflow-y: scroll;">
+	<div class="form-row">
+		<label for="node-input-output"><i class="icon-tag"></i> Output</label>
+		<select type="text" id="node-input-output">
+			<option value="value">Parsed Value</option>
+			<option value="object">Raw Object</option>
+		</select>
+	</div>
+	<div class="form-row node-input-event-row" style="margin-bottom: 0px;">
+		<div style="box-sizing: border-box; border-radius: 5px; height: 310px; padding: 5px; border: 1px solid #ccc; overflow-y: scroll;">
 			<ol id="node-input-event-container" style="list-style-type: none; margin: 0;"></ol>
 		</div>
 	</div>
-	<div class="form-row">
+	<div class="form-row node-input-event-row">
 		<a href="#" class="editor-button editor-button-small" id="node-input-add-event" style="margin-top: 4px;"><i class="fa fa-plus"></i> Add Event</a>
 	</div>
 </script>
