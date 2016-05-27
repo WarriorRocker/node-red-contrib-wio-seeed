@@ -16,7 +16,8 @@
 	],
 	"dependencies": {
 		"https": "*",
-		"url": "*"
+		"url": "*",
+		"path": "*"
 	},
 	"repository": {
 		"type": "git",

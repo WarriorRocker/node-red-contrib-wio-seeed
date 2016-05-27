@@ -12,7 +12,7 @@ module.exports = function (RED) {
 				var req = https.request({
 					hostname: node.connection.server,
 					port: 443,
-					path: '/v1/node/GroveRelay' + config.port + '/onoff/'
+					path: '/v1/node/' + config.port.replace(/:/g, '') + '/onoff/'
 						+ (((config.logic == 'auto') ? (msg.payload) : (config.logic == 'on')) ? 1 : 0)
 						+ '?access_token=' + config.node,
 					method: 'POST'

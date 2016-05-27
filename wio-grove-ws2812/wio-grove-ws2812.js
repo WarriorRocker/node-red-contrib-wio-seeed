@@ -11,8 +11,10 @@ module.exports = function (RED) {
 				var hexColors = [];
 				var count = Math.min(((config.mode == 'auto') ? msg.payload : config.count), config.count);
 				var colors = config.colors.split(',');
+
 				for (var i = 0; i < count; i++)
 					if (colors[i]) hexColors.push(colors[i]);
+
 				for (i = (hexColors.length - 1) ; i < config.count; i++)
 					hexColors.push('000000');
 
@@ -20,7 +22,7 @@ module.exports = function (RED) {
 				var req = https.request({
 					hostname: node.connection.server,
 					port: 443,
-					path: '/v1/node/GroveLedWs2812' + config.port + '/segment/'
+					path: '/v1/node/' + config.port.replace(/:/g, '') + '/segment/'
 						+ config.pos + '/' + hexColors.join('') + '?access_token=' + config.node,
 					method: 'POST'
 				}, function (res) {

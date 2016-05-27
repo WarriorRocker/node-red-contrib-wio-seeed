@@ -12,7 +12,8 @@ module.exports = function (RED) {
 				var req = https.request({
 					hostname: node.connection.server,
 					port: 443,
-					path: '/v1/node/' + config.module + config.port + '/' + config.method + '?access_token=' + config.node,
+					path: '/v1/node/' + config.port.replace(/:/g, '') + '/' + config.method
+						+ '?access_token=' + config.node,
 					method: 'GET'
 				}, function (res) {
 					res.on('data', function (chunk) {
@@ -43,7 +44,9 @@ module.exports = function (RED) {
 		}
 
 		function wioGetParsedValue(json) {
-			switch (config.module) {
+			var module = config.port.split(':');
+
+			switch (module[0]) {
 				case 'GroveTemp':
 					return json.temperature;
 

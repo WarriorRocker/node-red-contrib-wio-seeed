@@ -17,7 +17,7 @@ module.exports = function (RED) {
 				var req = https.request({
 					hostname: node.connection.server,
 					port: 443,
-					path: '/v1/node/Grove4Digit' + config.port + '/'
+					path: '/v1/node/' + config.port.replace(/:/g, '') + '/'
 						+ ((config.display == 'chars') ? 'display_digits' : 'display_one_digit') + '/'
 						+ config.pos + '/' + display + '?access_token=' + config.node,
 					method: 'POST'
