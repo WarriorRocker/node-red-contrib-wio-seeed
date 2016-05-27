@@ -19,7 +19,8 @@
 		oneditprepare: function () {
 			var config = this;
 			var skus = {
-				'103020005': { module: 'GroveRelay', name: 'Grove Relay' }
+				'103020005': { module: 'GroveRelay', name: 'Grove Relay' },
+				'103020014': { module: 'GroveDryReedRelay', name: 'Grove Dry Reed Relay' }
 			};
 			$.getScript('wio-common').done(function (res) {
 				WioCommon(config, skus);
