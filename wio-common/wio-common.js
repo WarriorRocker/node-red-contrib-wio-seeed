@@ -9,9 +9,10 @@
 		getConnection();
 	});
 
-	nodes.on('change', function () {
-		reloadPortSelect();
-	});
+	if ((ports.length) && (skus))
+		nodes.on('change', function () {
+			reloadPortSelect();
+		});
 
 	function getConnection() {
 		$.getJSON('wio-config/config-node?id=' + connection.val()).done(function (res) {
@@ -31,7 +32,7 @@
 						return ((a.online) ? -1 : 1);
 					});
 					for (var i = 0; i < res.nodes.length; i++) {
-						nodes.append($('<option></option>')
+						nodes.append($('<option/>')
 							.attr('value', res.nodes[i].node_key)
 							.text(res.nodes[i].name + ' (' + ((res.nodes[i].online) ? 'up' : 'down') + ')'));
 					}
@@ -52,7 +53,7 @@
 					ports.html('');
 					for (var i = 0; i < res.config.connections.length; i++) {
 						if (skus.hasOwnProperty(res.config.connections[i].sku))
-							ports.append($('<option></option>')
+							ports.append($('<option/>')
 								.attr('value', skus[res.config.connections[i].sku].module + ':' + res.config.connections[i].port)
 								.attr('data-wio-port', res.config.connections[i].port)
 								.attr('data-wio-sku', res.config.connections[i].sku)
