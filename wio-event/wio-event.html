@@ -38,6 +38,18 @@
 						'ir_recv_data_len': 'Data Length',
 						'ir_recv_data_hex': 'Data Hex'
 					}
+				},
+				'101020040': {
+					name: 'Grove IR Distance Interrupter',
+					events: {
+						'ir_approached': 'IR Approached'
+					}
+				},
+				'101020038': {
+					name: 'Grove Magnetic Switch',
+					events: {
+						'mag_approached': 'Mag Approached'
+					}
 				}
 			};
 			$.getScript('wio-common').done(function (res) {
