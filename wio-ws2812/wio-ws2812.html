@@ -1,8 +1,4 @@
-<!--<script type="text/javascript" src="test.js"></script>-->
-
 <script type="text/javascript">
-
-
 	RED.nodes.registerType('wio-ws2812', {
 		paletteLabel: 'ws2812',
 		category: 'wio',
@@ -29,7 +25,10 @@
 		oneditprepare: function () {
 			var config = this;
 			var skus = {
-				'104990089': { module: 'GroveLedWs2812', name: 'Grove LED WS2812' }
+				'104990089': {
+					name: 'Grove LED WS2812',
+					module: 'GroveLedWs2812'
+				}
 			};
 			$.getScript('wio-common').done(function (res) {
 				WioCommon(config, skus);

@@ -1,0 +1,116 @@
+<script type="text/javascript">
+	RED.nodes.registerType('wio-display', {
+		paletteLabel: 'display',
+		category: 'wio',
+		color: '#C0EDC0',
+		defaults: {
+			name: { value: '' },
+			connection: { value: '', type: 'wio-config' },
+			node: { value: '' },
+			port: { value: '' },
+			row: { value: 1 },
+			column: { value: 1 },
+			count: { value: 100 }
+		},
+		inputs: 1,
+		outputs: 1,
+		icon: 'file.png',
+		label: function () {
+			return this.name || 'display';
+		},
+		oneditprepare: function () {
+			var config = this;
+			var skus = {
+				'104030001': {
+					name: 'Grove LCD RGB Backlight',
+					module: 'GroveLCDRGB',
+					options: {
+						rows: 2,
+						columns: 16
+					}
+				},
+				'104030008': {
+					name: 'Grove OLED 128x64',
+					module: 'GroveOLED12864',
+					options: {
+						rows: 8,
+						columns: 16
+					}
+				}
+			};
+			$.getScript('wio-common').done(function (res) {
+				WioCommon(config, skus);
+
+				var ports = $('#node-input-port');
+				var row = $('#node-input-row');
+				var column = $('#node-input-column');
+				var count = $('#node-input-count');
+
+				ports.on('change', function () {
+					var sku = ports.find('option:selected').attr('data-wio-sku');
+					if (sku) {
+						genSelectNumberRange(row, 1, skus[sku].options.rows, config.row);
+						genSelectNumberRange(column, 1, skus[sku].options.columns, config.column);
+					}
+				}).trigger('change');
+
+				column.on('change', function () {
+					var sku = ports.find('option:selected').attr('data-wio-sku');
+					if (sku)
+						genSelectNumberRange(count, 1, (skus[sku].options.columns - column.val() + 1), config.count);
+				});
+
+				function genSelectNumberRange(element, start, end, current) {
+					element.html('');
+					for (var i = start; i <= end; i++)
+						$('<option/>').attr('value', i).text(i).appendTo(element);
+					if (current)
+						element.val(((current > end) ? end : current));
+					element.trigger('change');
+				}
+			});
+		}
+	});
+</script>
+
+<script type="text/x-red" data-template-name="wio-display">
+	<div class="form-row">
+		<label for="node-input-name"><i class="icon-tag"></i> Name</label>
+		<input type="text" id="node-input-name" placeholder="Name">
+	</div>
+	<div class="form-row">
+		<label for="node-input-connection"><i class="icon-tag"></i> Connection</label>
+		<select type="text" id="node-input-connection"></select>
+	</div>
+	<div class="form-row">
+		<label for="node-input-node"><i class="icon-tag"></i> Node</label>
+		<select type="text" id="node-input-node"></select>
+	</div>
+	<div class="form-row">
+		<label for="node-input-port"><i class="icon-tag"></i> Port</label>
+		<select type="text" id="node-input-port"></select>
+	</div>
+	<div class="form-row">
+		<label for="node-input-mode"><i class="icon-tag"></i> Mode</label>
+		<select type="text" id="node-input-mode">
+			<option value="auto">Auto</option>
+			<option value="manual">Manual</option>
+		</select>
+	</div>
+	<div class="form-row">
+		<label for="node-input-row"><i class="icon-tag"></i> Row</label>
+		<select type="text" id="node-input-row"></select>
+	</div>
+	<div class="form-row">
+		<label for="node-input-column"><i class="icon-tag"></i> Column</label>
+		<select type="text" id="node-input-column"></select>
+	</div>
+	<div class="form-row">
+		<label for="node-input-count"><i class="icon-tag"></i> Count</label>
+		<select type="text" id="node-input-count"></select>
+	</div>
+</script>
+
+<script type="text/x-red" data-help-name="wio-display">
+	<p>Wio Display</p>
+</script>

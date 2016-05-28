@@ -21,7 +21,10 @@
 		oneditprepare: function () {
 			var config = this;
 			var skus = {
-				'104030003': { module: 'Grove4Digit', name: 'Grove 4 Digit' }
+				'104030003': {
+					name: 'Grove 4 Digit',
+					module: 'Grove4Digit'
+				}
 			};
 			$.getScript('wio-common').done(function (res) {
 				WioCommon(config, skus);
