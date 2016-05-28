@@ -19,7 +19,6 @@
 		},
 		oneditprepare: function () {
 			var config = this;
-			console.log(config);
 			$.getJSON('wio-modules').done(function (skus) {
 				$.getScript('wio-common').done(function (res) {
 					WioCommon(config);
@@ -102,7 +101,6 @@
 			});
 
 			config.outputs = ((output.val() == 'value') ? config.events.length : 1);
-			console.log(config);
 		}
 	});
 </script>

@@ -1,0 +1,84 @@
+<script type="text/javascript">
+	RED.nodes.registerType('wio-speaker', {
+		paletteLabel: 'speaker',
+		category: 'wio',
+		color: '#C0EDC0',
+		defaults: {
+			name: { value: '' },
+			connection: { value: '', type: 'wio-config' },
+			node: { value: '' },
+			port: { value: '' },
+			mode: { value: 'manual' },
+			frequency: { value: 1000 },
+			duration: { value: 1000 }
+		},
+		inputs: 1,
+		outputs: 1,
+		icon: 'file.png',
+		label: function () {
+			return this.name || 'speaker';
+		},
+		oneditprepare: function () {
+			var config = this;
+			var skus = {
+				'107020001': {
+					name: 'Grove Speaker',
+					module: 'GroveSpeaker'
+				}
+			};
+			$.getScript('wio-common').done(function (res) {
+				WioCommon(config, skus);
+
+				var mode = $('#node-input-mode');
+				var frequencyRow = $('.node-input-frequency-row');
+				var durationRow = $('.node-input-duration-row');
+
+				mode.on('change', function () {
+					var value = mode.val();
+					frequencyRow.toggle((value != 'manualduration'));
+					durationRow.toggle(((value == 'manual') || (value == 'manualduration')));
+				}).trigger('change');
+			});
+		}
+	});
+</script>
+
+<script type="text/x-red" data-template-name="wio-speaker">
+	<div class="form-row">
+		<label for="node-input-name"><i class="icon-tag"></i> Name</label>
+		<input type="text" id="node-input-name" placeholder="Name">
+	</div>
+	<div class="form-row">
+		<label for="node-input-connection"><i class="icon-tag"></i> Connection</label>
+		<select type="text" id="node-input-connection"></select>
+	</div>
+	<div class="form-row">
+		<label for="node-input-node"><i class="icon-tag"></i> Node</label>
+		<select type="text" id="node-input-node"></select>
+	</div>
+	<div class="form-row">
+		<label for="node-input-port"><i class="icon-tag"></i> Port</label>
+		<select type="text" id="node-input-port"></select>
+	</div>
+	<div class="form-row">
+		<label for="node-input-mode"><i class="icon-tag"></i> Mode</label>
+		<select type="text" id="node-input-mode">
+			<option value="manual">Manual Frequency &amp; Duration</option>
+			<option value="manualfrequency">Manual Frequency</option>
+			<option value="manualduration">Manual Duration</option>
+			<option value="auto">Auto</option>
+		</select>
+	</div>
+	<div class="form-row node-input-frequency-row">
+		<label for="node-input-frequency"><i class="icon-tag"></i> Frequency</label>
+		<input type="number" id="node-input-frequency" placeholder="Frequency">
+	</div>
+	<div class="form-row node-input-duration-row">
+		<label for="node-input-duration"><i class="icon-tag"></i> Duration</label>
+		<input type="number" id="node-input-duration" placeholder="Duration">
+	</div>
+</script>
+
+<script type="text/x-red" data-help-name="wio-relay">
+	<p>Wio Relay</p>
+</script>
