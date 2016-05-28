@@ -25,23 +25,28 @@ This node contains many Wio sensors and an option for returning the full JSON re
 
 | Name | Module | Method | Parsed Value | Description |
 | --- | --- | --- | --- | --- |
+| Generic Digital Input | GenericDIn | input | input | Input |
+| Grove Button | GroveButton | pressed | pressed | Pressed |
+| Grove Moisture | GroveMoisture | moisture | moisture | Moisture |
+| Grove Ultrasonic Ranger | GroveUltraRanger | range_in_inch | range_inch | Inches Range |
+| | | range_in_cm | range_cm | Centimeters Range |
 | Grove Temperature | GroveTemp | temp | temperature | Celsius Temperature |
+| Grove Infrared Receiver | GroveIRRecv | protocol_parameters | | Protocol Parameters |
+| | | last_data_recved | last_data_recved | Last Data Received |
 |  Grove Temperature & Humidity | GroveTempHum | temperature | celsius_degree | Celsius Temperature |
 | | | temperature_f | fahrenheit_degree | Fahrenheit Temperature |
 | | | humidity | humidity | Humidity |
-| Grove Ultrasonic Ranger | GroveUltraRanger | range_in_inch | range_inch | Inches Range |
-| | | range_in_cm | range_cm | Centimeters Range |
 | Grove PIR Motion | GrovePIRMotion | approach | approach | Approach |
+| Grove Digital Light | GroveDigitalLight | lux | lux | Lux |
+| Grove 3-Axis Digital Compass | GroveCompass | compass_heading | heading_deg | Heading |
+| Grove Magnetic Switch | GroveMagneticSwitch | approach | mag_approach | Approach |
+| Grove 3-Axis Digital Accelerometer | GroveAccMMA7660 | shaked | shaked | Shaked |
+| Grove IR Distance Interrupter | GroveIRDistanceInterrupter | approach | approach | Approach |
 | Grove Air Quality | GroveAirquality | quality | quality | Quality |
+| Grove Gesture | GroveGesture | motion | motion | Motion |
 | Grove Barometer BMP28 | GroveBaroBMP280 | temperature | temperature | Celsius Temperature |
 | | | altitude | altitude | Altitude |
 | | | pressure | pressure | Pressure |
-| Grove Digital Light | GroveDigitalLight | lux | lux | Lux |
-| Grove Moisture | GroveMoisture | moisture | moisture | Moisture |
-| Grove Gesture | GroveGesture | motion | motion | Motion |
-| Grove Infrared Receiver | GroveIRRecv | protocol_parameters | | Protocol Parameters |
-| | | last_data_recved | last_data_recved | Last Data Received |
-| Grove Magnetic Switch | GroveMagneticSwitch | approach | mag_approach | Approach |
 
 ### wio-relay [GroveRelay - Grove Relay]
 This node provides the ability to drive the relay manually to the desired state or automatically using the payload value.
