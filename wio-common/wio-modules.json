@@ -1,4 +1,19 @@
 ﻿{
+	"7e3306bc-8911-11e5-af63-feff819cdc9f": {
+		"name": "Generic Digital Input",
+		"module": "GenericDIn",
+		"methods": {
+			"input": {
+				"name": "Inputs",
+				"value": "input"
+			}
+		},
+		"events": {
+			"input_changed": {
+				"name": "Input Changed"
+			}
+		}
+	},
 	"101020003": {
 		"name": "Grove Button",
 		"module": "GroveButton",
