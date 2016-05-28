@@ -84,6 +84,16 @@
 			}
 		}
 	},
+	"101020017": {
+		"name": "Grove Rotary Angle",
+		"module": "GroveRotaryAngle",
+		"methods": {
+			"angle": {
+				"name": "Angle",
+				"value": "angle"
+			}
+		}
+	},
 	"101020019-ffff": {
 		"name": "Grove Temperature & Humidity",
 		"module": "GroveTempHum",
