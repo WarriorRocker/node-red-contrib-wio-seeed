@@ -7,7 +7,7 @@
 
 	connection.on('change', function () {
 		getConnection();
-	});
+	}).trigger('change');
 
 	if ((ports.length) && (skus))
 		nodes.on('change', function () {
@@ -63,8 +63,9 @@
 					if ((config.port) && (ports.find('option[value="' + config.port + '"]').length))
 						ports.val(config.port);
 					if (!ports.find('option').length)
-						ports.append($('<option></option>').text(((res.config.connections.length)
-							? '--No compatible ports found--' : '--No ports configured--')));
+						$('<option/>')
+							.text(((res.config.connections.length) ? '--No compatible ports found--' : '--No ports configured--'))
+							.appendTo(ports);
 					ports.trigger('change');
 				}
 			});

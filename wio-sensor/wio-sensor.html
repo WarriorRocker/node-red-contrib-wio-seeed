@@ -5,7 +5,7 @@
 		color: '#C0EDC0',
 		defaults: {
 			name: { value: '' },
-			connection: { value: '', type: 'wio-config' },
+			connection: { value: {}, type: 'wio-config' },
 			node: { value: '' },
 			port: { value: '' },
 			method: { value: '' },
@@ -19,40 +19,36 @@
 		},
 		oneditprepare: function () {
 			var config = this;
-			var skus = {
-				'101020015': { module: 'GroveTemp', name: 'Grove Temperature' },
-				'101020019-ffff': { module: 'GroveTempHum', name: 'Grove Temperature & Humidity' },
-				'101020010': { module: 'GroveUltraRanger', name: 'Grove Ultrasonic Ranger' },
-				'101020020': { module: 'GrovePIRMotion', name: 'Grove PIR Motion' },
-				'101020078': { module: 'GroveAirquality', name: 'Grove Air Quality' },
-				'101020192': { module: 'GroveBaroBMP280', name: 'Grove Barometer BMP280' },
-				'101020030': { module: 'GroveDigitalLight', name: 'Grove Digital Light' },
-				'101020008': { module: 'GroveMoisture', name: 'Grove Moisture' },
-				'101020083': { module: 'GroveGesture', name: 'Grove Gesture' },
-				'101020016': { module: 'GroveIRRecv', name: 'Grove Infrared Receiver' },
-				'101020038': { module: 'GroveMagneticSwitch', name: 'Grove Magnetic Switch' },
-				'101020034': { module: 'GroveCompass', name: 'Grove 3-Axis Digital Compass' },
-				'101020039': { module: 'GroveAccMMA7660', name: 'Grove 3-Axis Digital Accelerometer' }
-			}
-			$.getScript('wio-common').done(function (res) {
-				WioCommon(config, skus);
+			$.getJSON('wio-modules').done(function (skus) {
+				$.getScript('wio-common').done(function (res) {
+					WioCommon(config, skus);
 
-				var ports = $('#node-input-port');
-				var modules = $('#node-input-module');
-				var methods = $('#node-input-method');
+					var ports = $('#node-input-port');
+					var modules = $('#node-input-module');
+					var methods = $('#node-input-method');
 
-				showModuleMethods();
+					popModuleMethods();
 
-				ports.on('change', function () {
-					showModuleMethods(ports.find('option:selected').attr('data-wio-module'));
-				});
+					ports.on('change', function () {
+						popModuleMethods(ports.find('option:selected').attr('data-wio-sku'));
+					});
 
-				function showModuleMethods(module) {
-					methods.val('').find('option').hide();
-					if (module) {
-						methods.val(methods.find('option[data-option-for="' + module + '"]').show().first().attr('value'));
+					function popModuleMethods(sku) {
+						methods.html('');
+						if ((skus.hasOwnProperty(sku)) && (skus[sku].methods))
+							for (method in skus[sku].methods)
+								$('<option/>')
+									.attr('value', method + ((skus[sku].methods[method].value) ? ':' + skus[sku].methods[method].value : ''))
+									.text(skus[sku].methods[method].name)
+									.appendTo(methods);
+						if ((config.method) && (methods.find('option[value="' + config.method + '"]').length))
+							methods.val(config.method);
+						if (!methods.find('option').length)
+							$('<option/>')
+								.text('--No compatible methods found--')
+								.appendTo(methods);
 					}
-				}
+				});
 			});
 		}
 	});
@@ -77,28 +73,7 @@
 	</div>
 	<div class="form-row">
 		<label for="node-input-method"><i class="icon-tag"></i> Method</label>
-		<select type="text" id="node-input-method">
-			<option data-option-for="GroveTemp" value="temp">Celsius Temperature</option>
-			<option data-option-for="GroveTempHum" value="temperature">Celsius Temperature</option>
-			<option data-option-for="GroveTempHum" value="temperature_f">Fahrenheit Temperature</option>
-			<option data-option-for="GroveTempHum" value="humidity">Humidity</option>
-			<option data-option-for="GroveUltraRanger" value="range_in_inch">Inches Range</option>
-			<option data-option-for="GroveUltraRanger" value="range_in_cm">Centimeters Range</option>
-			<option data-option-for="GrovePIRMotion" value="approach">Approach</option>
-			<option data-option-for="GroveAirquality" value="quality">Quality</option>
-			<option data-option-for="GroveBaroBMP280" value="temperature">Celsius Temperature</option>
-			<option data-option-for="GroveBaroBMP280" value="altitude">Altitude</option>
-			<option data-option-for="GroveBaroBMP280" value="pressure">Pressure</option>
-			<option data-option-for="GroveDigitalLight" value="lux">Lux</option>
-			<option data-option-for="GroveMoisture" value="moisture">Moisture</option>
-			<option data-option-for="GroveGesture" value="motion">Motion</option>
-			<option data-option-for="GroveIRRecv" value="protocol_parameters">Protocol Parameters</option>
-			<option data-option-for="GroveIRRecv" value="last_data_recved">Received Data</option>
-			<option data-option-for="GroveMagneticSwitch" value="approach">Approach</option>
-			<option data-option-for="GroveCompass" value="compass_heading">Heading</option>
-			<option data-option-for="GroveAccMMA7660" value="acceleration">Acceleration</option>
-			<option data-option-for="GroveAccMMA7660" value="shaked">Shaked</option>
-		</select>
+		<select type="text" id="node-input-method"></select>
 	</div>
 	<div class="form-row">
 		<label for="node-input-output"><i class="icon-tag"></i> Output</label>

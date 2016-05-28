@@ -1,0 +1,204 @@
+﻿{
+	"101020003": {
+		"name": "Grove Button",
+		"module": "GroveButton",
+		"methods": {
+			"pressed": {
+				"name": "Pressed",
+				"value": "pressed"
+			}
+		},
+		"events": {
+			"button_pressed": {
+				"name": "Button Pressed"
+			}
+		}
+	},
+	"101020008": {
+		"name": "Grove Moisture",
+		"module": "GroveMoisture",
+		"methods": {
+			"moisture": {
+				"name": "Moisture",
+				"value": "moisture"
+			}
+		}
+	},
+	"101020010": {
+		"name": "Grove Ultrasonic Ranger",
+		"module": "GroveUltraRanger",
+		"methods": {
+			"range_in_inch": {
+				"name": "Inches Range",
+				"value": "range_inch"
+			},
+			"range_in_cm": {
+				"name": "Centimeters Range",
+				"value": "range_cm"
+			}
+		}
+	},
+	"101020015": {
+		"name": "Grove Temperature",
+		"module": "GroveTemp",
+		"methods": {
+			"temp": {
+				"name": "Celsius Temperature",
+				"value": "temperature"
+			}
+		}
+	},
+	"101020016": {
+		"name": "Grove Infrared Receiver",
+		"module": "GroveIRRecv",
+		"methods": {
+			"protocol_parameters": {
+				"name": "Protocol Parameters"
+			},
+			"last_data_recved": {
+				"name": "Last Data Received",
+				"value": "data"
+			}
+		},
+		"events": {
+			"ir_recv_data_len": {
+				"name": "Data Length"
+			},
+			"ir_recv_data_hex": {
+				"name": "Data Hex"
+			}
+		}
+	},
+	"101020019-ffff": {
+		"name": "Grove Temperature & Humidity",
+		"module": "GroveTempHum",
+		"methods": {
+			"temperature": {
+				"name": "Celsius Temperature",
+				"value": "celsius_degree"
+			},
+			"temperature_f": {
+				"name": "Fahrenheit Temperature",
+				"value": "fahrenheit_degree"
+			},
+			"humidity": {
+				"name": "Humidity",
+				"value": "humidity"
+			}
+		}
+	},
+	"101020020": {
+		"name": "Grove PIR Motion",
+		"module": "GrovePIRMotion",
+		"methods": {
+			"approach": {
+				"name": "Approach",
+				"value": "approach"
+			}
+		},
+		"events": {
+			"ir_moved": {
+				"name": "PIR Motion"
+			}
+		}
+	},
+	"101020030": {
+		"name": "Grove Digital Light",
+		"module": "GroveDigitalLight",
+		"methods": {
+			"lux": {
+				"name": "Lux",
+				"value": "lux"
+			}
+		}
+	},
+	"101020034": {
+		"name": "Grove 3-Axis Digital Compass",
+		"module": "GroveCompass",
+		"methods": {
+			"compass_heading": {
+				"name": "Heading",
+				"value": "heading_deg"
+			}
+		}
+	},
+	"101020038": {
+		"name": "Grove Magnetic Switch",
+		"module": "GroveMagneticSwitch",
+		"methods": {
+			"approach": {
+				"name": "Approach",
+				"value": "mag_approach"
+			}
+		},
+		"events": {
+			"mag_approached": {
+				"name": "Mag Approached"
+			}
+		}
+	},
+	"101020039": {
+		"name": "Grove 3-Axis Digital Accelerometer",
+		"module": "GroveAccMMA7660",
+		"methods": {
+			"acceleration": {
+				"name": "Acceleration"
+			},
+			"shaked": {
+				"name": "Shaked",
+				"value": "shaked"
+			}
+		}
+	},
+	"101020040": {
+		"name": "Grove IR Distance Interrupter",
+		"module": "GroveIRDistanceInterrupter",
+		"methods": {
+			"approach": {
+				"name": "Approach",
+				"value": "approach"
+			}
+		},
+		"events": {
+			"ir_approached": { "name": "IR Approached" }
+		}
+	},
+	"101020078": {
+		"name": "Grove Air Quality",
+		"module": "GroveAirquality",
+		"methods": {
+			"quality": {
+				"name": "Quality",
+				"value": "quality"
+			}
+		}
+	},
+	"101020083": {
+		"name": "Grove Gesture",
+		"module": "GroveGesture",
+		"methods": {
+			"motion": {
+				"name": "Motion",
+				"value": "motion"
+			}
+		}
+	},
+	"101020192": {
+		"name": "Grove Barometer BMP280",
+		"module": "GroveBaroBMP280",
+		"methods": {
+			"temperature": {
+				"name": "Celsius Temperature",
+				"value": "temperature"
+			},
+			"altitude": {
+				"name": "Altitude",
+				"value": "altitude"
+			},
+			"pressure": {
+				"name": "Pressure",
+				"value": "pressure"
+			}
+		}
+	}
+}

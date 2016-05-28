@@ -19,105 +19,76 @@
 		},
 		oneditprepare: function () {
 			var config = this;
-			var events = {
-				'101020020': {
-					name: 'Grove PIR Motion',
-					events: {
-						'ir_moved': 'PIR Motion'
-					}
-				},
-				'101020003': {
-					name: 'Grove Button',
-					events: {
-						'button_pressed': 'Button Pressed'
-					}
-				},
-				'101020016': {
-					name: 'Grove Infrared Receiver',
-					events: {
-						'ir_recv_data_len': 'Data Length',
-						'ir_recv_data_hex': 'Data Hex'
-					}
-				},
-				'101020040': {
-					name: 'Grove IR Distance Interrupter',
-					events: {
-						'ir_approached': 'IR Approached'
-					}
-				},
-				'101020038': {
-					name: 'Grove Magnetic Switch',
-					events: {
-						'mag_approached': 'Mag Approached'
-					}
-				}
-			};
-			$.getScript('wio-common').done(function (res) {
-				WioCommon(config);
+			console.log(config);
+			$.getJSON('wio-modules').done(function (skus) {
+				$.getScript('wio-common').done(function (res) {
+					WioCommon(config);
 
-				var addEvent = $('#node-input-add-event');
-				var output = $('#node-input-output');
-				var eventsRows = $('.node-input-event-row');
-				var eventsContainer = $('#node-input-event-container');
+					var addEvent = $('#node-input-add-event');
+					var output = $('#node-input-output');
+					var eventsRows = $('.node-input-event-row');
+					var eventsContainer = $('#node-input-event-container');
 
-				output.on('change', function () {
-					eventsRows.toggle((output.val() == 'value'));
-				}).trigger('change');
+					output.on('change', function () {
+						eventsRows.toggle((output.val() == 'value'));
+					}).trigger('change');
 
-				addEvent.on('click', function () {
-					generateEvent((eventsContainer.children().length + 1));
-				});
-
-				for (var i = 0; i < config.events.length; i++)
-					generateEvent((i + 1), config.events[i]);
-
-				function generateEvent(index, event) {
-					var container = $('<li/>')
-						.attr('style', 'background: #fff; margin:0; padding: 8px 0px; border-bottom: 1px solid #ccc;');
-					var row = $('<div/>').appendTo(container);
-
-					var eventSelect = $('<select/>')
-						.attr('class', 'node-input-event-type')
-						.attr('style', 'width: 320px; margin-left: 5px;')
-						.appendTo(row);
-					for (var key in events)
-						if (events.hasOwnProperty(key))
-							for (var type in events[key].events)
-								if (events[key].events.hasOwnProperty(type))
-									$('<option/>').attr('value', type)
-										.text(events[key].name + ' - ' + events[key].events[type])
-										.appendTo(eventSelect);
-					if (event)
-						eventSelect.val(event);
-
-					var finalSpan = $('<span/>')
-						.attr('style', 'float: right; margin-right: 10px;')
-						.append(' &#8594; ')
-						.appendTo(row);
-
-					$('<span/>').attr('class', 'node-input-event-index')
-						.text(index).appendTo(finalSpan);
-
-					var deleteButton = $('<a/>')
-						.attr('href', '#')
-						.attr('class', 'editor-button editor-button-small')
-						.attr('style', 'margin-top: 7px; margin-left: 5px;')
-						.appendTo(finalSpan);
-					$('<i/>').attr('class', 'fa fa-remove').appendTo(deleteButton);
-
-					deleteButton.on('click', function () {
-						container
-							.css('background', '#FEE')
-							.fadeOut(300, function () {
-								$(this).remove();
-								eventsContainer.children().each(function (index) {
-									$(this).find('.node-input-event-index').text(index + 1);
-								});
-							});
+					addEvent.on('click', function () {
+						generateEvent((eventsContainer.children().length + 1));
 					});
 
-					eventsContainer.append(container);
-				}
+					for (var i = 0; i < config.events.length; i++)
+						generateEvent((i + 1), config.events[i]);
+
+					function generateEvent(index, event) {
+						var container = $('<li/>')
+							.attr('style', 'background: #fff; margin:0; padding: 8px 0px; border-bottom: 1px solid #ccc;');
+						var row = $('<div/>').appendTo(container);
+
+						var eventSelect = $('<select/>')
+							.attr('class', 'node-input-event-type')
+							.attr('style', 'width: 320px; margin-left: 5px;')
+							.appendTo(row);
+
+						for (var sku in skus)
+							if ((skus.hasOwnProperty([sku])) && (skus[sku].events))
+								for (var skuEvent in skus[sku].events)
+									if (skus[sku].events.hasOwnProperty(skuEvent))
+										$('<option/>').attr('value', skuEvent)
+											.text(skus[sku].name + ' - ' + skus[sku].events[skuEvent].name)
+											.appendTo(eventSelect);
+						if (event)
+							eventSelect.val(event);
+
+						var finalSpan = $('<span/>')
+							.attr('style', 'float: right; margin-right: 10px;')
+							.append(' &#8594; ')
+							.appendTo(row);
+
+						$('<span/>').attr('class', 'node-input-event-index')
+							.text(index).appendTo(finalSpan);
+
+						var deleteButton = $('<a/>')
+							.attr('href', '#')
+							.attr('class', 'editor-button editor-button-small')
+							.attr('style', 'margin-top: 7px; margin-left: 5px;')
+							.appendTo(finalSpan);
+						$('<i/>').attr('class', 'fa fa-remove').appendTo(deleteButton);
+
+						deleteButton.on('click', function () {
+							container
+								.css('background', '#FEE')
+								.fadeOut(300, function () {
+									$(this).remove();
+									eventsContainer.children().each(function (index) {
+										$(this).find('.node-input-event-index').text(index + 1);
+									});
+								});
+						});
+
+						eventsContainer.append(container);
+					}
+				});
 			});
 		},
 		oneditsave: function () {
@@ -131,6 +102,7 @@
 			});
 
 			config.outputs = ((output.val() == 'value') ? config.events.length : 1);
+			console.log(config);
 		}
 	});
 </script>

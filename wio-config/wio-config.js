@@ -1,6 +1,7 @@
 ﻿module.exports = function (RED) {
 	var url = require('url');
 	var path = require('path');
+	var commonPath = path.resolve(__dirname + '/../wio-common');
 
 	function WioConfig(config) {
 		RED.nodes.createNode(this, config);
@@ -16,6 +17,10 @@
 	});
 
 	RED.httpAdmin.get('/wio-common', function (req, res) {
-		res.sendFile(path.resolve(__dirname + '/../wio-common/wio-common.js'));
+		res.sendFile(path.join(commonPath, 'wio-common.js'));
+	});
+
+	RED.httpAdmin.get('/wio-modules', function (req, res) {
+		res.sendFile(path.join(commonPath, 'wio-modules.json'));
 	});
 }
