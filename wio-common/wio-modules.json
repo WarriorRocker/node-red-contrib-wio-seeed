@@ -4,13 +4,23 @@
 		"module": "GenericDIn",
 		"methods": {
 			"input": {
-				"name": "Inputs",
+				"name": "Input",
 				"value": "input"
 			}
 		},
 		"events": {
 			"input_changed": {
 				"name": "Input Changed"
+			}
+		}
+	},
+	"eedec01c-8c5a-11e5-8994-feff819cdc9f": {
+		"name": "Generic Analog Input",
+		"module": "GenericAIn",
+		"methods": {
+			"analog": {
+				"name": "Analog",
+				"value": "analog"
 			}
 		}
 	},
