@@ -1,6 +1,6 @@
 <script type="text/javascript">
-	RED.nodes.registerType('wio-servo', {
-		paletteLabel: 'servo',
+	RED.nodes.registerType('wio-pwm', {
+		paletteLabel: 'pwm',
 		category: 'wio',
 		color: '#C0EDC0',
 		defaults: {
@@ -9,41 +9,41 @@
 			node: { value: '' },
 			port: { value: '' },
 			mode: { value: 'manual' },
-			angle: { value: 0 },
-			duration: { value: 1 }
+			duty: { value: 50 },
+			frequency: { value: 1000 }
 		},
 		inputs: 1,
 		outputs: 1,
 		icon: 'file.png',
 		label: function () {
-			return this.name || 'servo';
+			return this.name || 'pwm';
 		},
 		oneditprepare: function () {
 			var config = this;
 			var skus = {
-				'316010005': {
-					name: 'Grove Servo',
-					module: 'GroveServo'
+				'63e25800-a2d2-11e5-bf7f-feff819cdc9f': {
+					name: 'Generic PWM Output',
+					module: 'GenericPWMOut'
 				}
 			};
 			$.getScript('wio-common').done(function (res) {
 				WioCommon(config, skus);
 
 				var mode = $('#node-input-mode');
-				var angleRow = $('.node-input-angle-row');
-				var durationRow = $('.node-input-duration-row');
+				var dutyRow = $('.node-input-duty-row');
+				var frequencyRow = $('.node-input-frequency-row');
 
 				mode.on('change', function () {
 					var value = mode.val();
-					angleRow.toggle((value != 'manualduration'));
-					durationRow.toggle((value != 'manualangle'));
+					dutyRow.toggle(((value == 'manual') || (value == 'manualdutyfrequency') || (value == 'manualduty')));
+					frequencyRow.toggle(((value == 'manualdutyfrequency') || (value == 'manualfrequency')));
 				}).trigger('change');
 			});
 		}
 	});
 </script>
 
-<script type="text/x-red" data-template-name="wio-servo">
+<script type="text/x-red" data-template-name="wio-pwm">
 	<div class="form-row">
 		<label for="node-input-name"><i class="icon-tag"></i> Name</label>
 		<input type="text" id="node-input-name" placeholder="Name">
@@ -63,21 +63,23 @@
 	<div class="form-row">
 		<label for="node-input-mode"><i class="icon-tag"></i> Mode</label>
 		<select type="text" id="node-input-mode">
-			<option value="manual">Manual Angle &amp; Duration</option>
-			<option value="manualangle">Manual Angle</option>
-			<option value="manualduration">Manual Duration</option>
+			<option value="manual">Manual Duty</option>
+			<option value="auto">Auto Duty</option>
+			<option value="manualdutyfrequency">Manual Duty &amp; Frequency</option>
+			<option value="manualduty">Manual Duty &amp; Auto Frequency</option>
+			<option value="manualfrequency">Manual Frequency &amp; Auto Duty</option>
 		</select>
 	</div>
-	<div class="form-row node-input-angle-row">
-		<label for="node-input-angle"><i class="icon-tag"></i> Angle</label>
-		<input type="number" id="node-input-angle" placeholder="Angle">
+	<div class="form-row node-input-duty-row">
+		<label for="node-input-duty"><i class="icon-tag"></i> Duty</label>
+		<input type="number" id="node-input-duty" placeholder="Duty">
 	</div>
-	<div class="form-row node-input-duration-row">
-		<label for="node-input-duration"><i class="icon-tag"></i> Duration</label>
-		<input type="number" id="node-input-duration" placeholder="Duration">
+	<div class="form-row node-input-frequency-row">
+		<label for="node-input-frequency"><i class="icon-tag"></i> Frequency</label>
+		<input type="number" id="node-input-frequency" placeholder="Frequency">
 	</div>
 </script>
 
-<script type="text/x-red" data-help-name="wio-servo">
-	<p>Wio Servo</p>
+<script type="text/x-red" data-help-name="wio-pwm">
+	<p>Wio PWM</p>
 </script>
