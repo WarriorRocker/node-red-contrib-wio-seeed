@@ -1,7 +1,7 @@
 module.exports = function (RED) {
 	const https = require('https');
 
-	function WioRelay(config) {
+	function WioOutput(config) {
 		RED.nodes.createNode(this, config);
 		var node = this;
 		node.connection = RED.nodes.getNode(config.connection);
@@ -37,5 +37,5 @@ module.exports = function (RED) {
 			node.status({ fill: 'red', shape: 'ring', text: 'missing connection' });
 		}
 	}
-	RED.nodes.registerType('wio-relay', WioRelay);
+	RED.nodes.registerType('wio-output', WioOutput);
 }

@@ -31,11 +31,14 @@
 	"license": "MIT",
 	"node-red": {
 		"nodes": {
-			"sensor": "wio-sensor/wio-sensor.js",
-			"relay": "wio-relay/wio-relay.js",
 			"digit": "wio-digit/wio-digit.js",
-			"ws2812": "wio-ws2812/wio-ws2812.js",
-			"event":  "wio-event/wio-event.js"
+			"display": "wio-display/wio-display.js",
+			"event":  "wio-event/wio-event.js",
+			"output": "wio-output/wio-output.js",
+			"sensor": "wio-sensor/wio-sensor.js",
+			"servo": "wio-servo/wio-servo.js",
+			"speaker": "wio-speaker/wio-speaker.js",
+			"ws2812": "wio-ws2812/wio-ws2812.js"
 		}
 	}
 }

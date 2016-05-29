@@ -1,6 +1,6 @@
 <script type="text/javascript">
-	RED.nodes.registerType('wio-relay', {
-		paletteLabel: 'relay',
+	RED.nodes.registerType('wio-output', {
+		paletteLabel: 'output',
 		category: 'wio',
 		color: '#C0EDC0',
 		defaults: {
@@ -14,11 +14,15 @@
 		outputs: 1,
 		icon: 'file.png',
 		label: function () {
-			return this.name || 'relay';
+			return this.name || 'output';
 		},
 		oneditprepare: function () {
 			var config = this;
 			var skus = {
+				'3a9d9a84-8c59-11e5-8994-feff819cdc9f': {
+					name: 'Generic Digital Output',
+					module: 'GenericDOut'
+				},
 				'103020005': {
 					name: 'Grove Relay',
 					module: 'GroveRelay'
@@ -35,7 +39,7 @@
 	});
 </script>
 
-<script type="text/x-red" data-template-name="wio-relay">
+<script type="text/x-red" data-template-name="wio-output">
 	<div class="form-row">
 		<label for="node-input-name"><i class="icon-tag"></i> Name</label>
 		<input type="text" id="node-input-name" placeholder="Name">
@@ -62,6 +66,6 @@
 	</div>
 </script>
 
-<script type="text/x-red" data-help-name="wio-relay">
-	<p>Wio Relay</p>
+<script type="text/x-red" data-help-name="wio-output">
+	<p>Wio Output</p>
 </script>
