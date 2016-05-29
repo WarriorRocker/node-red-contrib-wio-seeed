@@ -123,6 +123,24 @@
 			}
 		}
 	},
+	"101020019": {
+		"name": "Grove Temperature & Humidity Pro",
+		"module": "GroveTempHumPro",
+		"methods": {
+			"temperature": {
+				"name": "Celsius Temperature",
+				"value": "celsius_degree"
+			},
+			"temperature_f": {
+				"name": "Fahrenheit Temperature",
+				"value": "fahrenheit_degree"
+			},
+			"humidity": {
+				"name": "Humidity",
+				"value": "humidity"
+			}
+		}
+	},
 	"101020019-ffff": {
 		"name": "Grove Temperature & Humidity",
 		"module": "GroveTempHum",
