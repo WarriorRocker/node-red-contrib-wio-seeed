@@ -24,6 +24,15 @@
 			}
 		}
 	},
+	"63e25800-a2d2-11e5-bf7f-feff819cdc9f": {
+		"name": "Generic PWM Output",
+		"module": "GenericPWMOut",
+		"methods": {
+			"pwm": {
+				"name": "PWM Parameters"
+			}
+		}
+	},
 	"eedec01c-8c5a-11e5-8994-feff819cdc9f": {
 		"name": "Generic Analog Input",
 		"module": "GenericAIn",
