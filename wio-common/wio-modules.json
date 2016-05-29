@@ -14,6 +14,16 @@
 			}
 		}
 	},
+	"3a9d9a84-8c59-11e5-8994-feff819cdc9f": {
+		"name": "Generic Digital Output",
+		"module": "GenericDOut",
+		"methods": {
+			"onoff_status": {
+				"name": "On/Off Status",
+				"value": "onff"
+			}
+		}
+	},
 	"eedec01c-8c5a-11e5-8994-feff819cdc9f": {
 		"name": "Generic Analog Input",
 		"module": "GenericAIn",
