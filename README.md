@@ -36,6 +36,9 @@ This node contains many Wio sensors and an option for returning the full JSON re
 | Grove Temperature | GroveTemp | temp | temperature |
 | Grove Infrared Receiver | GroveIRRecv | protocol_parameters | |
 | | | last_data_recved | last_data_recved |
+|  Grove Temperature & Humidity Pro | GroveTempHumPro | temperature | celsius_degree |
+| | | temperature_f | fahrenheit_degree |
+| | | humidity | humidity |
 |  Grove Temperature & Humidity | GroveTempHum | temperature | celsius_degree |
 | | | temperature_f | fahrenheit_degree |
 | | | humidity | humidity |
