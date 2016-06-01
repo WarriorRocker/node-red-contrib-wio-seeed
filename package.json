@@ -35,6 +35,7 @@
 			"display": "wio-display/wio-display.js",
 			"event":  "wio-event/wio-event.js",
 			"output": "wio-output/wio-output.js",
+			"pwm": "wio-pwm/wio-pwm.js",
 			"sensor": "wio-sensor/wio-sensor.js",
 			"servo": "wio-servo/wio-servo.js",
 			"speaker": "wio-speaker/wio-speaker.js",
