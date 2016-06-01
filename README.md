@@ -102,5 +102,9 @@ This node provides the ability to output, start, or stop a sound on the speaker 
 | | | sound_start |
 | | | sound_stop |
 
-### wio-ws2812 [GroveLedWs2812 - Grove WS2812 LED Strip]
+### wio-ws2812
 This node provides the ability to set single or multiple LED's to the specified colors manually or automatically using the payload value.
+
+| Name | Module | Method |
+| --- | --- | --- |
+| Grove LED WS2812 | GroveLedWs2812 | segment |
