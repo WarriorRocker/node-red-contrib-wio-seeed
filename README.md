@@ -35,6 +35,15 @@ This node contains many Wio events and an option for returning th full JSON resp
 | Grove Magnetic Switch | GroveMagneticSwitch | mag_approach | Approach |
 | Grove IR Distance Interrupter | GroveIRDistanceInterrupter | ir_approached | IR Approached |
 
+### wio-output
+This node provides the ability to drive modules with a boolean state such as a relay manually to the desired state or automatically using the payload value.
+
+| Name | Module | Method |
+| --- | --- | --- |
+| Generic Digital Output | GenericDOut | onoff |
+| Grove Relay | GroveRelay | onoff |
+| Grove Dry Reed Relay | GroveDryReedRelay | onoff |
+
 ### wio-pwm
 This node provides the ability to set the duty and frequency for a PWM signal manually or automatically using the payload value.
 
@@ -77,14 +86,12 @@ This node contains many Wio sensors and an option for returning the full JSON re
 | | | altitude | altitude |
 | | | pressure | pressure |
 
-### wio-output
-This node provides the ability to drive modules with a boolean state such as a relay manually to the desired state or automatically using the payload value.
+### wio-servo
+This node provides the ability to drive a servo to the desired angle over a duration manually or automatically using the payload value.
 
 | Name | Module | Method |
 | --- | --- | --- |
-| Generic Digital Output | GenericDOut | onoff |
-| Grove Relay | GroveRelay | onoff |
-| Grove Dry Reed Relay | GroveDryReedRelay | onoff |
+| Grove Servo | GroveServo | angle_motion_in_seconds |
 
 ### wio-ws2812 [GroveLedWs2812 - Grove WS2812 LED Strip]
 This node provides the ability to set single or multiple LED's to the specified colors manually or automatically using the payload value.
