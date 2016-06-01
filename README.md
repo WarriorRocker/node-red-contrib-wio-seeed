@@ -6,6 +6,14 @@ something something
 
 ## Nodes
 
+### wio-digit
+This node provides the ability to set single or multiple characters on the display using the payload value.
+
+| Name | Module | Method |
+| --- | --- | --- |
+| Grove 4 Digit | Grove4Digit | display_digits |
+| | | display_one_digit |
+
 ### wio-event
 This node contains many Wio events and an option for returning th full JSON response or switched input for the parsed output.
 
@@ -62,9 +70,6 @@ This node provides the ability to drive modules with a boolean state such as a r
 | Generic Digital Output | GenericDOut | onoff |
 | Grove Relay | GroveRelay | onoff |
 | Grove Dry Reed Relay | GroveDryReedRelay | onoff |
-
-### wio-digit [Grove4Digit - Grove 4-Digit Display]
-This node provides the ability to set single or multiple characters on the display using the payload value.
 
 ### wio-ws2812 [GroveLedWs2812 - Grove WS2812 LED Strip]
 This node provides the ability to set single or multiple LED's to the specified colors manually or automatically using the payload value.
