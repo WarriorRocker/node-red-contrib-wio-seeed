@@ -93,5 +93,14 @@ This node provides the ability to drive a servo to the desired angle over a dura
 | --- | --- | --- |
 | Grove Servo | GroveServo | angle_motion_in_seconds |
 
+### wio-speaker
+This node provides the ability to output, start, or stop a sound on the speaker manually or automatically using the payload value.
+
+| Name | Module | Method |
+| --- | --- | --- |
+| Grove Speaker | GroveSpeaker | sound_ms |
+| | | sound_start |
+| | | sound_stop |
+
 ### wio-ws2812 [GroveLedWs2812 - Grove WS2812 LED Strip]
 This node provides the ability to set single or multiple LED's to the specified colors manually or automatically using the payload value.
