@@ -54,8 +54,14 @@ This node contains many Wio sensors and an option for returning the full JSON re
 | | | altitude | altitude |
 | | | pressure | pressure |
 
-### wio-relay [GroveRelay - Grove Relay]
-This node provides the ability to drive the relay manually to the desired state or automatically using the payload value.
+### wio-output
+This node provides the ability to drive modules with a boolean state such as a relay manually to the desired state or automatically using the payload value.
+
+| Name | Module | Method |
+| --- | --- | --- |
+| Generic Digital Output | GenericDOut | onoff |
+| Grove Relay | GroveRelay | onoff |
+| Grove Dry Reed Relay | GroveDryReedRelay | onoff |
 
 ### wio-digit [Grove4Digit - Grove 4-Digit Display]
 This node provides the ability to set single or multiple characters on the display using the payload value.
