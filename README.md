@@ -14,6 +14,14 @@ This node provides the ability to set single or multiple characters on the displ
 | Grove 4 Digit | Grove4Digit | display_digits |
 | | | display_one_digit |
 
+## wio-display
+This node provides the ability to set strings and values on the display using the payload value.
+
+| Name | Module | Method |
+| --- | --- | --- |
+| Grove LCD RGB Backlight | GroveLCDRGB | string |
+| Grove OLED 128x64 | GroveOLED12864 | string |
+
 ### wio-event
 This node contains many Wio events and an option for returning th full JSON response or switched input for the parsed output.
 
