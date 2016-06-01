@@ -35,6 +35,13 @@ This node contains many Wio events and an option for returning th full JSON resp
 | Grove Magnetic Switch | GroveMagneticSwitch | mag_approach | Approach |
 | Grove IR Distance Interrupter | GroveIRDistanceInterrupter | ir_approached | IR Approached |
 
+### wio-pwm
+This node provides the ability to set the duty and frequency for a PWM signal manually or automatically using the payload value.
+
+| Name | Module | Method |
+| --- | --- | --- |
+| Generic PWM Output | GenericPWMOut | pwm |
+| | | pwm_with_freq |
 
 ### wio-sensor
 This node contains many Wio sensors and an option for returning the full JSON response or the parsed sensor output.
