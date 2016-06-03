@@ -25,9 +25,9 @@
 		"url": "https://github.com/WarriorRocker/node-red-contrib-wio-seeed.git"
 	},
 	"bugs": {
-        "url": "https://github.com/WarriorRocker/node-red-contrib-wio-seeed/issues"
-    },
-    "homepage": "https://github.com/WarriorRocker/node-red-contrib-wio-seeed",
+		"url": "https://github.com/WarriorRocker/node-red-contrib-wio-seeed/issues"
+	},
+	"homepage": "https://github.com/WarriorRocker/node-red-contrib-wio-seeed",
 	"license": "MIT",
 	"node-red": {
 		"nodes": {
