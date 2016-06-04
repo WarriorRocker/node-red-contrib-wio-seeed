@@ -28,7 +28,7 @@
 		"url": "https://github.com/WarriorRocker/node-red-contrib-wio-seeed/issues"
 	},
 	"homepage": "https://github.com/WarriorRocker/node-red-contrib-wio-seeed",
-	"license": "MIT",
+	"license": "Apache-2.0",
 	"node-red": {
 		"nodes": {
 			"digit": "wio-digit/wio-digit.js",
