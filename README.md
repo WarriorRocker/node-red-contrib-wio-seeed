@@ -1,8 +1,21 @@
 # node-red-contrib-wio-seeed
-This project contains Wio Link Nodes using Grove modules for use with Node RED.
+This package contains many nodes for Node-Red that make using Wio modules such as Grove sensors and displays more streamlined. Currently supported are all of the modules included in the Wio Link Deluxe Kit Plus, all Generic inputs and outputs provided by the Wio board, and many more. Contributions and improvements are welcomed.
 
 ## Install
-something something
+```
+$ npm install node-red-contrib-wio-seeed
+```
+
+## Configuration
+All of the nodes included in this package require the access token provided when logging into Seeed's IOT API. Currently the only way to obtain this token is by performing a post request to the API.
+
+http://seeed-studio.github.io/Wio_Link/#user-login
+
+Write down the resulting token as you should only need to do this once. Next in Node-RED drag one of the nodes under the Wio category and open the configuration dialog. The first time a Wio node is used for a particular flow you will need to click the pencil icon next to the Connection field to add a new wio-config node.
+
+Enter your token and change the server to a private Wio server or leave it as default for use with the official Seeed IOT API server. Next select Add then select Ok and deploy the current flow. You may need to allow the flow to be deployed even if the node(s) are not fully configured. This is due to the way the Node-RED admin interface works, see the TODO list if you think you can make this better. Once you have deployed the wio-config for the first time with your current flow all subsequent Wio nodes can be easily managed without needing to deploy again.
+
+Now re-open the configuration dialog for the Wio node and you should see all of the Wio Nodes (devices) under your user account. Select the correct Node and the correct Port should be automatically selected, if there is more than one compatible module configured you can use the drop down to select the correct Port identifier. Lastly select any additional options and select Ok. .. That's it! You should now be able to easily interact with your Wio using Node-RED.
 
 ## Nodes
 
@@ -108,3 +121,9 @@ This node provides the ability to set single or multiple LED's to the specified 
 | Name | Module | Method |
 | --- | --- | --- |
 | Grove LED WS2812 | GroveLedWs2812 | segment |
+
+## Todo
+- Update the wio-config node to utilize Node-RED credential storage for the username and password and perform the request for a new access token dynamically.
+
+## Known Issues and Limitations
+- Although the option is provided to set a different server I have not yet tested this using a private Wio server, although this is planned in the near future.
