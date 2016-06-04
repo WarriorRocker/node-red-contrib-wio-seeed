@@ -3,7 +3,7 @@ This package contains many nodes for Node-Red that make using Wio modules such a
 
 ## Install
 ```
-$ npm install node-red-contrib-wio-seeed
+$ npm -g install node-red-contrib-wio-seeed
 ```
 
 ## Configuration
@@ -124,6 +124,9 @@ This node provides the ability to set single or multiple LED's to the specified 
 
 ## Todo
 - Update the wio-config node to utilize Node-RED credential storage for the username and password and perform the request for a new access token dynamically.
+- Refactor the wio-common functions into a more robust and reusable class.
+- Move the admin interface functions into a service provided by the wio-config node to unify the usage of $.getJSON and https.request.
 
 ## Known Issues and Limitations
 - Although the option is provided to set a different server I have not yet tested this using a private Wio server, although this is planned in the near future.
+- Sometimes it may be necessary to re-open the configuration dialog when Nodes or Ports fail to appear and should be fixed as part of the TODO's above.
