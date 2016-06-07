@@ -4,7 +4,7 @@ module.exports = function (RED) {
 	function WioSensor(config) {
 		RED.nodes.createNode(this, config);
 		var node = this;
-		node.connection = RED.nodes.getNode(config.connection);
+		node.connection = RED.nodes.getCredentials(config.connection);
 
 		if (node.connection) {
 			this.on('input', function (msg) {
@@ -35,6 +35,7 @@ module.exports = function (RED) {
 				req.end();
 			});
 		} else {
+			console.log(node);
 			node.status({ fill: 'red', shape: 'ring', text: 'missing connection' });
 		}
 	}

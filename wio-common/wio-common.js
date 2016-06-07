@@ -15,7 +15,7 @@
 		});
 
 	function getConnection() {
-		$.getJSON('wio-config/config-node?id=' + connection.val()).done(function (res) {
+		$.getJSON('wio-config/' + connection.val()).done(function (res) {
 			config.connection = res;
 			reloadNodeSelect();
 		});

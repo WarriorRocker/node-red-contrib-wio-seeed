@@ -1,21 +1,89 @@
 ﻿<script type="text/javascript">
 	RED.nodes.registerType('wio-config', {
 		category: 'config',
-		defaults: {
-			server: { value: 'iot.seeed.cc', required: true },
-			token: { value: '', required: true },
+		credentials: {
+			server: { type: 'text' },
+			token: { type: 'text' }
 		},
-		label: 'wio config'
+		label: 'wio config',
+		oneditprepare: function () {
+			var config = this;
+			var server = $('#node-input-server');
+			var email = $('#node-input-email');
+			var password = $('#node-input-password');
+			var token = $('#node-input-token');
+
+			server.val(((config.credentials.server) ? config.credentials.server : 'iot.seeed.cc'));
+			token.val(((config.credentials.token) ? config.credentials.token : ''));
+			toggleLoginOrTokenInput((!config.credentials.token));
+
+			$('#node-input-login-button').on('click', function () {
+				getAuthorizationToken();
+			});
+
+			$('#node-input-manual-token-button').on('click', function () {
+				toggleLoginOrTokenInput(false);
+			});
+
+			$('#node-input-enter-login-button').on('click', function () {
+				toggleLoginOrTokenInput(true);
+			});
+
+			function toggleLoginOrTokenInput(showLogin) {
+				$('.node-input-login-row').toggle(showLogin);
+				$('.node-input-token-row').toggle(!showLogin);
+			}
+
+			function getAuthorizationToken() {
+				if ((email.val()) && (password.val())) {
+					$.ajax({
+						url: 'https://' + server.val() + '/v1/user/login',
+						data: {
+							email: email.val(),
+							password: password.val()
+						},
+						method: 'POST',
+						success: function (res) {
+							if (res.token) {
+								token.val(res.token);
+								toggleLoginOrTokenInput(false);
+							}
+						}
+					});
+				}
+			}
+		},
+		oneditsave: function () {
+			var config = this;
+
+			$.post('wio-config/' + config.id + '/auth', {
+				server: $('#node-input-server').val(),
+				token: $('#node-input-token').val()
+			});
+		}
 	});
 </script>
 
 <script type="text/x-red" data-template-name="wio-config">
 	<div class="form-row">
-		<label for="node-config-input-server"><i class="icon-tag"></i> Server</label>
-		<input type="text" id="node-config-input-server" placeholder="Server">
+		<label for="node-input-server"><i class="icon-tag"></i> Server</label>
+		<input type="text" id="node-input-server" placeholder="Server">
 	</div>
-	<div class="form-row">
-		<label for="node-config-input-token"><i class="icon-tag"></i> Token</label>
-		<input type="text" id="node-config-input-token" placeholder="Token">
+	<div class="form-row node-input-login-row">
+		<label for="node-input-email"><i class="icon-tag"></i> Email</label>
+		<input type="text" id="node-input-email" placeholder="Email">
+	</div>
+	<div class="form-row node-input-login-row">
+		<label for="node-input-password"><i class="icon-tag"></i> Password</label>
+		<input type="password" id="node-input-password" placeholder="Password">
+	</div>
+	<div class="form-row node-input-login-row">
+		<a href="#" class="editor-button" id="node-input-login-button" style="margin-top: 4px;"><i class="fa fa-lock"></i> Login</a>
+		<a href="#" class="editor-button" id="node-input-manual-token-button" style="margin-top: 4px;"><i class="fa fa-pencil"></i> Manual Token</a>
+	</div>
+	<div class="form-row node-input-token-row">
+		<label for="node-input-token"><i class="icon-tag"></i> Token</label>
+		<input type="text" id="node-input-token" style="width: 60%;" placeholder="Token">
+		<a href="#" class="editor-button" id="node-input-enter-login-button" style="margin-top: 4px;"><i class="fa fa-lock"></i></a>
 	</div>
 </script>

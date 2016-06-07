@@ -8,12 +8,27 @@
 		this.server = config.server;
 		this.token = config.token;
 	}
-	RED.nodes.registerType('wio-config', WioConfig);
+	RED.nodes.registerType('wio-config', WioConfig, {
+		credentials: {
+			server: { type: 'text' },
+			token: { type: 'text' }
+		}
+	});
 
-	RED.httpAdmin.get('/wio-config/config-node', function (req, res) {
-		var query = url.parse(req.url, true).query;
-		if (query.id)
-			res.send(RED.nodes.getNode(query.id));
+	RED.httpAdmin.get('/wio-config/:id', function (req, res) {
+		res.send(RED.nodes.getCredentials(req.params.id));
+	});
+
+	RED.httpAdmin.post('/wio-config/:id/auth', function (req, res) {
+		var credentials = {};
+
+		if (req.body.server)
+			credentials.server = req.body.server;
+
+		if (req.body.token)
+			credentials.token = req.body.token;
+
+		RED.nodes.addCredentials(req.params.id, credentials);
 	});
 
 	RED.httpAdmin.get('/wio-common', function (req, res) {

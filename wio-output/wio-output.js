@@ -4,7 +4,7 @@ module.exports = function (RED) {
 	function WioOutput(config) {
 		RED.nodes.createNode(this, config);
 		var node = this;
-		node.connection = RED.nodes.getNode(config.connection);
+		node.connection = RED.nodes.getCredentials(config.connection);
 
 		if (node.connection) {
 			this.on('input', function (msg) {
