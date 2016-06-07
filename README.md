@@ -9,15 +9,11 @@ $ npm -g install node-red-contrib-wio-seeed
 ```
 
 ## Configuration
-All of the nodes included in this package require the access token provided when logging into Seeed's IOT API. Currently the only way to obtain this token is by performing a post request to the API.
+All of the nodes included in this package require the access token provided when logging into Seeed's IOT API. The token can be obtained by logging in with your email and password or entered manually when adding the config node.
 
-http://seeed-studio.github.io/Wio_Link/#user-login
+Once the config node is added or updated in the Connections section of the node then select the desired Node from the list. Once a Node is selected the correct Port should be automatically selected, if there is more than one compatible module configured you can use the drop down to select the correct Port identifier and Module name. Lastly select any additional options and select Ok. .. That's it! You should now be able to easily interact with your Wio using Node-RED.
 
-Write down the resulting token as you should only need to do this once. Next in Node-RED drag one of the nodes under the Wio category and open the configuration dialog. The first time a Wio node is used for a particular flow you will need to click the pencil icon next to the Connection field to add a new wio-config node.
-
-Enter your token and change the server to a private Wio server or leave it as default for use with the official Seeed IOT API server. Next select Add then select Ok and deploy the current flow. You may need to allow the flow to be deployed even if the node(s) are not fully configured. This is due to the way the Node-RED admin interface works, see the TODO list if you think you can make this better. Once you have deployed the wio-config for the first time with your current flow all subsequent Wio nodes can be easily managed without needing to deploy again.
-
-Now re-open the configuration dialog for the Wio node and you should see all of the Wio Nodes (devices) under your user account. Select the correct Node and the correct Port should be automatically selected, if there is more than one compatible module configured you can use the drop down to select the correct Port identifier. Lastly select any additional options and select Ok. .. That's it! You should now be able to easily interact with your Wio using Node-RED.
+Instructions on how to obtain a token manually can be found in Seeed's IoT API docs at: http://seeed-studio.github.io/Wio_Link/#user-login
 
 ## Nodes
 
