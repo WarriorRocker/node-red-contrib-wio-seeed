@@ -1,5 +1,7 @@
 # node-red-contrib-wio-seeed
-This package contains many nodes for Node-Red that make using Wio modules such as Grove sensors and displays more streamlined. Currently supported are all of the modules included in the Wio Link Deluxe Kit Plus, all Generic inputs and outputs provided by the Wio board, and many more. Contributions and improvements are welcomed.
+This package contains many nodes for Node-RED that make using Wio modules such as Grove sensors and displays more streamlined. Currently supported are all of the modules included in the Wio Link Deluxe Kit Plus, all Generic inputs and outputs provided by the Wio board, and many more. Contributions and improvements are welcomed.
+
+![Node-RED Wio Nodes](http://www.xodustech.com/images/nodered/node-red-flows.png) 
 
 ## Install
 ```
