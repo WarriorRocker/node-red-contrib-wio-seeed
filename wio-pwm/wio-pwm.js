@@ -8,18 +8,17 @@ module.exports = function (RED) {
 
 		if (node.connection) {
 			this.on('input', function (msg) {
-				var payload = ((msg.payload) ? parseInt(msg.payload) : 0);
 				var request = '';
 				if (config.mode == 'manualdutyfrequency') {
-					request = 'pwm_with_freq/' + parseInt(config.duty) + '/' + parseInt(config.frequency);
+					request = 'pwm_with_freq/' + parseFloat(config.duty) + '/' + parseInt(config.frequency);
 				} else if (config.mode == 'manualduty') {
-					request = 'pwm_with_freq/' + parseInt(config.duty) + '/' + payload;
+					request = 'pwm_with_freq/' + parseFloat(config.duty) + '/' + parseInt(msg.payload);
 				} else if (config.mode == 'manualfrequency') {
-					request = 'pwm_with_freq/' + payload + '/' + parseInt(config.frequency);
+					request = 'pwm_with_freq/' + parseFloat(msg.payload) + '/' + parseInt(config.frequency);
 				} else if (config.mode == 'manual') {
-					request = 'pwm/' + parseInt(config.duty);
+					request = 'pwm/' + parseFloat(config.duty);
 				} else {
-					request = 'pwm/' + payload;
+					request = 'pwm/' + parseFloat(msg.payload);
 				}
 
 				node.status({ fill: 'blue', shape: 'dot', text: 'requesting' });
