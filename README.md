@@ -128,9 +128,9 @@ This node provides the ability to set single or multiple LED's to the specified 
 | Grove LED WS2812 | GroveLedWs2812 | segment |
 
 ## Todo
-- Update the wio-config node to utilize Node-RED credential storage for the username and password and perform the request for a new access token dynamically.
 - Refactor the wio-common functions into a more robust and reusable class.
 - Move the admin interface functions into a service provided by the wio-config node to unify the usage of $.getJSON and https.request.
+- ~~Update the wio-config node to utilize Node-RED credential storage for the username and password and perform the request for a new access token dynamically.~~
 
 ## Known Issues and Limitations
 - Although the option is provided to set a different server I have not yet tested this using a private Wio server, although this is planned in the near future.
