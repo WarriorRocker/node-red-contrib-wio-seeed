@@ -17,18 +17,19 @@ module.exports = function (RED) {
 						+ '?access_token=' + config.node,
 					method: 'POST'
 				}, function (res) {
+					msg.payload = '';
 					res.on('data', function (chunk) {
-						msg.payload = JSON.parse(chunk)
-						node.send(msg);
+						try { msg.payload = JSON.parse(chunk); }
+						catch (e) { node.warn('api error'); }
 						node.status({});
+						node.send(msg);
 					});
 				});
 
 				req.on('error', function (err) {
 					msg.payload = err.toString();
-					msg.statusCode = err.code;
-					node.send(msg);
 					node.status({ fill: 'red', shape: 'ring', text: err.code });
+					node.send(msg);
 				});
 
 				req.end();

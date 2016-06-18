@@ -34,7 +34,6 @@ module.exports = function (RED) {
 
 				req.on('error', function (err) {
 					msg.payload = err.toString();
-					msg.statusCode = err.code;
 					node.status({ fill: 'red', shape: 'ring', text: err.code });
 					node.send(msg);
 				});
