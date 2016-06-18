@@ -20,7 +20,7 @@
 		"methods": {
 			"onoff_status": {
 				"name": "On/Off Status",
-				"value": "onff"
+				"value": "onoff"
 			}
 		}
 	},
@@ -241,7 +241,7 @@
 		"methods": {
 			"onoff_status": {
 				"name": "On/Off Status",
-				"value": "onff"
+				"value": "onoff"
 			}
 		}
 	},
@@ -289,7 +289,7 @@
 		"methods": {
 			"onoff_status": {
 				"name": "On/Off Status",
-				"value": "onff"
+				"value": "onoff"
 			}
 		}
 	},
@@ -299,7 +299,7 @@
 		"methods": {
 			"onoff_status": {
 				"name": "On/Off Status",
-				"value": "onff"
+				"value": "onoff"
 			}
 		}
 	},
@@ -309,7 +309,7 @@
 		"methods": {
 			"onoff_status": {
 				"name": "On/Off Status",
-				"value": "onff"
+				"value": "onoff"
 			}
 		}
 	},
