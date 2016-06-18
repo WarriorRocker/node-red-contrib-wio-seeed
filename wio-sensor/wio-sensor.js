@@ -21,7 +21,8 @@ module.exports = function (RED) {
 					res.on('data', function (chunk) {
 						try {
 							var json = JSON.parse(chunk);
-							msg.payload = (((config.output == 'value') && (method[1]) && (json[method[1]])) ? json[method[1]] : json);
+							msg.payload = (((config.output == 'value') && (method[1])
+								&& (typeof json[method[1]] !== "undefined")) ? json[method[1]] : json);
 						}
 						catch (e) {
 							node.warn('api error');
