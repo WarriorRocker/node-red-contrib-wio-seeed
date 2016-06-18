@@ -17,9 +17,15 @@ module.exports = function (RED) {
 						+ '?access_token=' + config.node,
 					method: 'GET'
 				}, function (res) {
+					msg.payload = '';
 					res.on('data', function (chunk) {
-						var json = JSON.parse(chunk);
-						msg.payload = (((config.output == 'value') && (method[1]) && (json[method[1]])) ? json[method[1]] : json);
+						try {
+							var json = JSON.parse(chunk);
+							msg.payload = (((config.output == 'value') && (method[1]) && (json[method[1]])) ? json[method[1]] : json);
+						}
+						catch (e) {
+							node.warn('api error');
+						}
 						node.status({});
 						node.send(msg);
 					});
@@ -28,14 +34,13 @@ module.exports = function (RED) {
 				req.on('error', function (err) {
 					msg.payload = err.toString();
 					msg.statusCode = err.code;
-					node.send(msg);
 					node.status({ fill: 'red', shape: 'ring', text: err.code });
+					node.send(msg);
 				});
 
 				req.end();
 			});
 		} else {
-			console.log(node);
 			node.status({ fill: 'red', shape: 'ring', text: 'missing connection' });
 		}
 	}
