@@ -5,7 +5,7 @@ This package contains many nodes for Node-RED that make using Wio modules such a
 
 ## Install
 ```
-$ npm -g install node-red-contrib-wio-seeed
+$ npm install node-red-contrib-wio-seeed
 ```
 
 ## Configuration
@@ -34,7 +34,7 @@ This node provides the ability to set strings and values on the display using th
 | Grove OLED 128x64 | GroveOLED12864 | string |
 
 ### wio-event
-This node contains many Wio events and an option for returning th full JSON response or switched input for the parsed output.
+This node contains many Wio events and an option for returning the full JSON response or switched input for the parsed output.
 
 | Name | Module | Parsed Value | Description |
 | --- | --- | --- | --- |
@@ -52,7 +52,9 @@ This node provides the ability to drive modules with a boolean state such as a r
 | Name | Module | Method |
 | --- | --- | --- |
 | Generic Digital Output | GenericDOut | onoff |
+| Grove Electromagnet | GroveElecMagnet | onoff |
 | Grove Relay | GroveRelay | onoff |
+| Grove SPDT Relay | GroveSPDTRelay30A | onoff |
 | Grove Dry Reed Relay | GroveDryReedRelay | onoff |
 
 ### wio-pwm
@@ -91,11 +93,16 @@ This node contains many Wio sensors and an option for returning the full JSON re
 | Grove Magnetic Switch | GroveMagneticSwitch | approach | mag_approach |
 | Grove 3-Axis Digital Accelerometer | GroveAccMMA7660 | shaked | shaked |
 | Grove IR Distance Interrupter | GroveIRDistanceInterrupter | approach | approach |
+| Grove Electromagnet | GroveElecMagnet | onoff_status | onoff |
 | Grove Air Quality | GroveAirquality | quality | quality |
 | Grove Gesture | GroveGesture | motion | motion |
 | Grove Barometer BMP28 | GroveBaroBMP280 | temperature | temperature |
 | | | altitude | altitude |
 | | | pressure | pressure |
+| Grove Relay | GroveRelay | onoff_status | onoff |
+| Grove SPDT Relay | GroveSPDTRelay30A | onoff_status | onoff |
+| Grove Dry Reed Relay | GroveDryReedRelay | onoff_status | onoff |
+| Grove Servo | GroveServo | angle | degree |
 
 ### wio-servo
 This node provides the ability to drive a servo to the desired angle over a duration manually or automatically using the payload value.
