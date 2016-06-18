@@ -235,6 +235,16 @@
 			"ir_approached": { "name": "IR Approached" }
 		}
 	},
+	"101020073": {
+		"name": "Grove Electromagnet",
+		"module": "GroveElecMagnet",
+		"methods": {
+			"onoff_status": {
+				"name": "On/Off Status",
+				"value": "onff"
+			}
+		}
+	},
 	"101020078": {
 		"name": "Grove Air Quality",
 		"module": "GroveAirquality",
@@ -270,6 +280,46 @@
 			"pressure": {
 				"name": "Pressure",
 				"value": "pressure"
+			}
+		}
+	},
+	"103020005": {
+		"name": "Grove Relay",
+		"module": "GroveRelay",
+		"methods": {
+			"onoff_status": {
+				"name": "On/Off Status",
+				"value": "onff"
+			}
+		}
+	},
+	"103020012": {
+		"name": "Grove SPDT Relay",
+		"module": "GroveSPDTRelay30A",
+		"methods": {
+			"onoff_status": {
+				"name": "On/Off Status",
+				"value": "onff"
+			}
+		}
+	},
+	"103020014": {
+		"name": "Grove Dry Reed Relay",
+		"module": "GroveDryReedRelay",
+		"methods": {
+			"onoff_status": {
+				"name": "On/Off Status",
+				"value": "onff"
+			}
+		}
+	},
+	"316010005": {
+		"name": "Grove Servo",
+		"module": "GroveServo",
+		"methods": {
+			"angle": {
+				"name": "Angle Degree",
+				"value": "degree"
 			}
 		}
 	}
