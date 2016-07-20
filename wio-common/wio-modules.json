@@ -245,6 +245,16 @@
 			"ir_approached": { "name": "IR Approached" }
 		}
 	},
+	"101020063": {
+		"name": "Grove Loudness Sensor",
+		"module": "GroveLoudness",
+		"methods": {
+			"loudness": {
+				"name": "Loudness",
+				"value": "loudness"
+			}
+		}
+	},
 	"101020067": {
 		"name": "Grove CO2 MH-Z16",
 		"module": "GroveCo2MhZ16",
