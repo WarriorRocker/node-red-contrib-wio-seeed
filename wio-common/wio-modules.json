@@ -245,6 +245,16 @@
 			"ir_approached": { "name": "IR Approached" }
 		}
 	},
+	"101020043": {
+		"name": "Grove UV",
+		"module": "GroveUV",
+		"methods": {
+			"uv_index": {
+				"name": "UV Index",
+				"value": "uv_index"
+			}
+		}
+	},
 	"101020063": {
 		"name": "Grove Loudness",
 		"module": "GroveLoudness",
