@@ -235,6 +235,20 @@
 			"ir_approached": { "name": "IR Approached" }
 		}
 	},
+	"101020067": {
+		"name": "Grove CO2 MH-Z16",
+		"module": "GroveCo2MhZ16",
+		"methods": {
+			"read_concentration": {
+				"name": "CO2 Concentration",
+				"value": "concentration"
+			},
+			"read_temperature": {
+				"name": "Celsius Temperature",
+				"value": "temperature"
+			}
+		}
+	}
 	"101020073": {
 		"name": "Grove Electromagnet",
 		"module": "GroveElecMagnet",
