@@ -175,7 +175,7 @@
 		}
 	},
 	"101020023": {
-		"name": "Grove Sound Sensor",
+		"name": "Grove Sound",
 		"module": "GroveSound",
 		"methods": {
 			"sound_level": {
@@ -246,7 +246,7 @@
 		}
 	},
 	"101020063": {
-		"name": "Grove Loudness Sensor",
+		"name": "Grove Loudness",
 		"module": "GroveLoudness",
 		"methods": {
 			"loudness": {
@@ -276,6 +276,16 @@
 			"onoff_status": {
 				"name": "On/Off Status",
 				"value": "onoff"
+			}
+		}
+	},
+	"101020076": {
+		"name": "Grove Luminance",
+		"module": "GroveLuminance",
+		"methods": {
+			"luminance": {
+				"name": "Luminance",
+				"value": "lux"
 			}
 		}
 	},
