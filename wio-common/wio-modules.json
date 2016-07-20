@@ -367,6 +367,16 @@
 			}
 		}
 	},
+	"103020024": {
+		"name": "Grove Finger-Clip Heart Rate",
+		"module": "GroveFingerClipHeartRate",
+		"methods": {
+			"heart_rate": {
+				"name": "Heart Rate",
+				"value": "heart_rate"
+			}
+		}
+	},
 	"316010005": {
 		"name": "Grove Servo",
 		"module": "GroveServo",
