@@ -7,11 +7,13 @@
 		},
 		label: 'wio config',
 		oneditprepare: function () {
+			console.log(this);
 			var config = this;
 			var server = $('#node-input-server');
 			var email = $('#node-input-email');
 			var password = $('#node-input-password');
 			var token = $('#node-input-token');
+			var errornotification = null;
 
 			server.val(((config.credentials.server) ? config.credentials.server : 'iot.seeed.cc'));
 			token.val(((config.credentials.token) ? config.credentials.token : ''));
@@ -35,6 +37,9 @@
 			}
 
 			function getAuthorizationToken() {
+				if (errornotification)
+					errornotification.close();
+
 				if ((email.val()) && (password.val())) {
 					$.ajax({
 						url: 'https://' + server.val() + '/v1/user/login',
@@ -46,8 +51,15 @@
 						success: function (res) {
 							if (res.token) {
 								token.val(res.token);
-								toggleLoginOrTokenInput(false);
+								RED.notify('Login success!', 'success');
+								$('#node-config-dialog-ok').trigger('click');
+							} else {
+								errorNotification = RED.notify((('error' in res) ? response.error : 'Unknown error'), 'error');
 							}
+						},
+						error: function (xhr) {
+							var response = JSON.parse(xhr.responseText);
+							errorNotification = RED.notify((('error' in response) ? response.error : 'Unknown error'), 'error');
 						}
 					});
 				}
