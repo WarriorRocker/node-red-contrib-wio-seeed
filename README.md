@@ -13,7 +13,7 @@ All of the nodes included in this package require the access token provided when
 
 Once the config node is added or updated in the Connections section of the node then select the desired Node from the list. Once a Node is selected the correct Port should be automatically selected, if there is more than one compatible module configured you can use the drop down to select the correct Port identifier and Module name. Lastly select any additional options and select Ok. .. That's it! You should now be able to easily interact with your Wio using Node-RED.
 
-Instructions on how to obtain a token manually can be found in Seeed's IoT API docs at: http://seeed-studio.github.io/Wio_Link/#user-login
+Instructions on how to obtain a token manually can be found in Seeed's IoT API docs at: http://seeed-studio.github.io/Wio_Link/#use-seeed-39-s-user-system
 
 ## Nodes
 
